@@ -1,0 +1,153 @@
+\documentclass[12pt]{report}
+
+\usepackage[utf8]{inputenc}
+\usepackage{amssymb}
+\usepackage{amsmath}
+\usepackage{svg}
+\usepackage{tabularx}
+\usepackage{soul}
+\usepackage[pdfusetitle]{hyperref}
+\usepackage{enumitem}
+\usepackage{nicefrac}
+
+\usepackage{geometry}
+\geometry{
+a4paper,
+left=30mm,
+right=30mm,
+top=40mm,
+bottom=30mm
+}
+
+\setcounter{tocdepth}{3}
+\setcounter{secnumdepth}{3}
+
+\usepackage{tikz}
+\usetikzlibrary{circuits}
+\usetikzlibrary{shapes,arrows}
+\usetikzlibrary{positioning}
+
+\tikzset{auto,>=latex', minimum size=0pt, node distance=1, font=\fontsize{11}{11}\selectfont}
+
+\tikzstyle{block} = [draw, fill=white, rectangle, minimum height=3em, minimum width=4em, text centered, align=center]
+\tikzstyle{integrator} = [draw, fill=white, rectangle, minimum height=3em, minimum width=2em, font={$\frac{1}{s}$}]
+\tikzstyle{sum} = [draw, fill=white, circle, node distance=1cm]
+\tikzstyle{input} = [coordinate]
+\tikzstyle{output} = [coordinate]
+\tikzstyle{pinstyle} = [pin edge={to-,thin,black}]
+\tikzstyle{gain} = [draw, isosceles triangle, minimum height = 3em, isosceles triangle apex angle=60]
+\tikzstyle{spy} = [coordinate, inner sep=0, outer sep=0, minimum size=0]
+\tikzstyle{node} = [draw, circle, fill, minimum size=2pt, inner sep=0pt, outer sep=0pt, anchor=center]
+
+%\usepackage{bodegraph}
+
+%\usetikzlibrary{intersections}
+%\usetikzlibrary{calc}
+
+\setlength{\parindent}{0em}
+\setlength{\parskip}{0.5em}
+
+\newenvironment{conditions}
+{\par\vspace{\abovedisplayskip}\noindent\centering\begin{tabular}{>{$}r<{$} @{${}:{}$} l}}
+{\end{tabular}\par\vspace{\belowdisplayskip}}
+
+\newenvironment{nb}{\par\vspace{\abovedisplayskip}\noindent\begin{em}n.b.\ \ignorespaces}{\end{em}}
+
+
+\DeclareMathOperator{\im}{im}
+\DeclareMathOperator{\rad}{rad}
+\DeclareMathOperator{\sgn}{sgn}
+\DeclareMathOperator{\diag}{diag}
+
+\newcommand{\matr}[1]{\boldsymbol{#1}}
+\newcommand{\vect}[1]{\boldsymbol{#1}}
+
+\newcommand{\trans}{\mathsf{T}}
+\newcommand{\inv}{{-1}}
+\newcommand{\psinv}{\dag}
+\newcommand\norm[1]{\left\lVert#1\right\rVert}
+
+\newcommand{\Real}{\mathbb{R}}
+
+\newcommand{\I}{\matr{I}}
+\newcommand{\0}{\vect{0}}
+
+\newcommand{\J}{\matr{J}}
+\newcommand{\dJ}{\dot{\J}}
+
+\newcommand{\estimate}[1]{\hat{#1}}
+\newcommand{\error}[1]{\tilde{#1}}
+\newcommand{\reference}[1]{\bar{#1}}
+
+\newcommand{\B}{\matr{B}}
+\newcommand{\dB}{\dot\B}
+\newcommand{\Bs}{\hat\B}
+\newcommand{\Be}{\error\B}
+
+\newcommand{\C}{\matr{C}}
+\newcommand{\Cs}{\estimate\C}
+\newcommand{\Ce}{\error\C}
+
+\newcommand{\g}{\vect{g}}
+\newcommand{\gs}{\estimate\g}
+
+\newcommand{\n}{\vect{n}}
+\newcommand{\ns}{\estimate\n}
+\newcommand{\ner}{\error\n} % #r becuase ne already exists
+
+\newcommand{\K}{\matr{K}}
+
+\newcommand{\y}{\vect{y}}
+\newcommand{\dy}{\dot{\y}}
+\newcommand{\ddy}{\ddot{\y}}
+
+\newcommand{\q}{\vect{q}}
+\newcommand{\dq}{\dot{\q}}
+\newcommand{\ddq}{\ddot{\q}}
+\newcommand{\qd}{\bar{\q}}
+\newcommand{\dqd}{\dot{\reference{\q}}}
+\newcommand{\ddqd}{\ddot{\reference{\q}}}
+\newcommand{\qe}{\error{\q}}
+\newcommand{\dqe}{\dot{\error{\q}}}
+\newcommand{\ddqe}{\ddot{\error{\q}}}
+\newcommand{\qs}{\estimate{\q}}
+\newcommand{\dqs}{\dot{\estimate{\q}}}
+\newcommand{\ddqs}{\ddot{\estimate{\q}}}
+
+\newcommand{\x}{\vect{x}}
+\newcommand{\dx}{\dot{\x}}
+\newcommand{\ddx}{\ddot{\x}}
+\newcommand{\xd}{\reference{\x}}
+\newcommand{\dxd}{\dot{\reference{\x}}}
+\newcommand{\ddxd}{\ddot{\reference{\x}}}
+\newcommand{\xe}{\error{\x}}
+\newcommand{\dxe}{\dot{\error{\x}}}
+\newcommand{\ddxe}{\ddot{\error{\x}}}
+\newcommand{\xs}{\estimate{\x}}
+\newcommand{\dxs}{\dot{\estimate{\x}}}
+\newcommand{\ddxs}{\ddot{\estimate{\x}}}
+
+\newcommand{\warning}[1]{\textcolor{red}{WARNING #1}}
+
+\usepackage{imakeidx}
+\makeindex[intoc]
+
+\usepackage[backend=biber]{biblatex}
+\addbibresource{references.bib}
+
+\title{Nonlinear control\\Notes\thanks{the whole document is based on \cite{cir-slides}}}
+\author{Roberto Bochet}
+
+\begin{document}
+
+\maketitle
+
+\printbibliography
+
+\tableofcontents
+
+%\include{chapters/1-something}
+
+\printindex
+
+\end{document}
