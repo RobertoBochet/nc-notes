@@ -1,0 +1,47 @@
+\chapter{Passive systems}
+
+\section{Definition}
+
+\begin{gather*}
+    \begin{cases}
+        \dx (t) = f(x,u) \\
+        y(t) = g(x,u)
+    \end{cases} \\
+    f(0,0)=0, \; g(0,0)=0
+\end{gather*}
+
+A dynamical system is called \textbf{passive} if there exists a \textbf{Lyapunov function} $\dV(\cdot)$ called \textbf{storage function}, such that
+
+\[
+    uy \geq \dV (\cdot) + \epsilon u^2 + \delta y^2 + \rho \psi(x)
+\]
+
+with
+
+\[
+    \epsilon \geq 0, \delta \geq 0, \rho \geq 0, \psi(x) > 0
+\]
+
+Note that the Lyapunov function can be written as
+
+\[
+    \dV(\cdot) = \frac{\partial \V}{\partial x} f(x,u)
+\]
+
+\subsection{Conservative system}
+
+A passive system is called \textbf{conservative} if $\epsilon = \delta = \rho = 0$, such that
+
+\[
+    uy = \dV (\cdot)
+\]
+
+\subsection{Strictly passive}
+
+A passive system is called strictly passive if any of $\epsilon, \delta, \rho$ is greater that $0$.
+In particular
+
+Strictly passive w.r.t the input if $\epsilon > 0$ \\
+Strictly passive w.r.t the output if $\delta > 0$ \\
+Strictly passive w.r.t the state if $\rho > 0$
+
