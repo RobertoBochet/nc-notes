@@ -122,8 +122,8 @@ From the definition of constant inputs we get $\Delta y^0 = \Delta u^0 = \Delta 
 
 \subsection{Popov criterion}
 
-\begin{theorem}
-    A \textbf{Autonomous Lur'e system} is absolutely stable in sector $[0,k]$ if the linear part is asymptotically stable and exists a real number $q$ such that
+\begin{theorem}\label{thm:popov-stable}
+    An \textbf{autonomous Lur'e system} is absolutely stable in sector $[0,k]$ if the linear part is asymptotically stable and exists a real number $q$ such that
     \[
         \Re [(1+\j \omega q) G(\j \omega)] > - \frac{1}{k}, \forall \omega \geq 0
     \]
@@ -131,3 +131,21 @@ From the definition of constant inputs we get $\Delta y^0 = \Delta u^0 = \Delta 
 \end{theorem}
 
 \subsubsection{Special case $q=0$}
+
+With $q=0$ the condition is reduced to
+
+\[
+    \Re [G(\j \omega)] > - \frac{1}{k}, \forall \omega \geq 0
+\]
+
+so the \textbf{Popov criterion} requires that the $G(\j\omega)$ polar plot is contained in the right-half-plane defined by the vertical line passing to the real point $-\frac{1}{k}$
+
+\subsubsection{Case $q \neq 0$}
+
+\begin{corollary}
+    Defining
+    \[
+        G^*(\j\omega) = \Re[G(\j\omega)] + \j\omega \Im[G(\j\omega)]
+    \]
+    the \autoref{thm:popov-stable} requires that exists a straight line passing through the real point $-\frac{1}{k}$ such that the $G^*(\j\omega)$ polar plot is contained in the right-half-plane defined by it.
+\end{corollary}
