@@ -1,0 +1,131 @@
+\usepackage{hyperref}\chapter{Lur'e systems}
+
+\section{Definition}
+
+\begin{figure}[htb]
+    \centering
+    \resizebox{0.7\textwidth}{!}{
+        \begin{tikzpicture}
+            \node [sum] (sum_e) {};
+
+            \node [block, right=1cm of sum_e] (controller) {$\varphi(\cdot)$};
+            \node [block, right=1cm of controller] (system) {$G(s)$};
+
+            \node [output, right=1cm of system] (oy) {};
+
+            \draw [->] (sum_e) -- node {$e$} (controller);
+            \draw [->] (controller) -- node {$u$} (system);
+            \draw [->] (system) -- node [pos=0.8] {$y$} node [node, name=y, pos=0.5] {} (oy);
+
+            \draw [->] (y) -- ++(0,-1.5) -| node [pos=0.95] {$-$} (sum_e);
+        \end{tikzpicture}
+    }
+    \caption{Autonomous Lur'e system}
+    \label{fig:lure-system}
+\end{figure}
+
+\textbf{Autonomous Lur'e system} is composed by a \textbf{linear system} ($G(s)$) \textbf{controllable} and \textbf{observable} fed by a \textbf{nonlinear function} ($\varphi(e)$) on the feedback error.
+
+\[
+    \begin{cases}
+        \dx = A x + B \varphi(-Cx) \\
+        y = C x
+    \end{cases}
+\]
+
+The non linear function is bounded into a sector ($\varphi(e) \in \Phi_{[k_1,k_2]}$) defined as
+
+\[
+    \Phi_{[k_1,k_2]} = \{\phi(\cdot) : (k_2 e -u)(u - k_1 e) \geq 0, u=\phi(e), \forall e \in \Real \}
+\]
+
+For this kind of system $\bar{x} = 0$ is an equilibrium.
+
+\subsection{Meaning}
+
+\begin{figure}[htb]
+    \centering
+    \resizebox{.9\textwidth}{!}{
+    \begin{tikzpicture}
+        \node [input] (iy_d) {};
+
+        \node [sum, right=1cm of iy_d] (sum_e) {};
+        \node [block, right=0.6cm of sum_e] (controller) {$R(s)$};
+        \node [sum, right=0.6cm of controller] (sum_u) {};
+        \node [block, right=0.6cm of sum_u] (nonlinearity) {$\Psi(\cdot)$};
+        \node [block, right=1cm of nonlinearity] (system) {$P(s)$};
+        \node [sum, right=0.6cm of system] (sum_d) {};
+
+        \node [output, right=1cm of sum_d] (oy) {};
+
+        \node [input, above=1cm of sum_u] (iu_n) {};
+        \node [input, above=1cm of sum_d] (id_n) {};
+
+        \node [block, below=1cm of nonlinearity] (feedback) {$T(s)$};
+
+        \draw [->] (iy_d) -- node{$y^0$} (sum_e);
+        \draw [->] (sum_e) -- node {$e$} (controller);
+        \draw [->] (controller) -- node {$w$} (sum_u);
+        \draw [->] (sum_u) -- node {$u$} (nonlinearity);
+        \draw [->] (nonlinearity) -- node {$m$} (system);
+        \draw [->] (system) -- (sum_d);
+
+        \draw [->] (sum_d) -- node [pos=0.8] {$\tilde y$} node [node, name=y, pos=0.5] {} (oy);
+
+        \draw [->] (y) |- (feedback);
+        \draw [->] (feedback) -| node[pos=0.07] {$y$} node [pos=0.95] {$-$} (sum_e);
+
+        \draw [->] (iu_n) -- node[pos=0.2] {$u^0$} (sum_u);
+        \draw [->] (id_n) -- node[pos=0.2] {$d^0$} (sum_d);
+
+    \end{tikzpicture}
+    }
+    \caption{A generic feedback system with a nonlinearity}
+    \label{fig:generic-feedback-system}
+\end{figure}
+
+A general feedback system (e.g \autoref{fig:generic-feedback-system}) containing a nonlinear function where input are constant can be traced to an \textbf{autonomous Lur'e system}.
+
+Chosen an equilibrium (associated to a constant inputs) and the whole system can be studied in the neighbourhood of it applying a coordinate shifting (i.e. $\Delta x(t) = x(t) - \bar x$)
+
+From the definition of constant inputs we get $\Delta y^0 = \Delta u^0 = \Delta d^0 = 0$, then we get a system like \autoref{fig:generic-feedback-system-equilibrium}, easily to retract back to an \textbf{Autonomous Lur'e system}
+
+\begin{figure}[htb]
+    \centering
+    \resizebox{.8\textwidth}{!}{
+        \begin{tikzpicture}
+            \node [sum] (sum_e) {};
+            \node [block, right=0.6cm of sum_e] (controller) {$R(s)$};
+            \node [block, right=2cm of controller] (nonlinearity) {$\varphi(\cdot)$};
+            \node [block, right=1cm of nonlinearity] (system) {$P(s)$};
+
+            \node [output, right=1cm of system] (oy) {};
+
+            \node [block, below=1cm of nonlinearity] (feedback) {$T(s)$};
+
+            \draw [->] (sum_e) -- node {$\Delta e$} (controller);
+            \draw [->] (controller) -- node {$\Delta w = \Delta u$} (nonlinearity);
+            \draw [->] (nonlinearity) -- node {$\Delta m$} (system);
+            \draw [->] (system) -- node [pos=0.8] {$\Delta \tilde y$} node [node, name=y, pos=0.5] {} (oy);
+
+            \draw [->] (y) |- (feedback);
+            \draw [->] (feedback) -| node[pos=0.07] {$\Delta y$} node [pos=0.95] {$-$} (sum_e);
+
+
+        \end{tikzpicture}
+    }
+    \caption{A generic feedback system with a nonlinearity considered near the equilibrium}
+    \label{fig:generic-feedback-system-equilibrium}
+\end{figure}
+
+\section{Properties}
+
+\subsection{Popov criterion}
+
+\begin{theorem}
+    A \textbf{Autonomous Lur'e system} is absolutely stable in sector $[0,k]$ if the linear part is asymptotically stable and exists a real number $q$ such that
+    \[
+        \Re [(1+\j \omega q) G(\j \omega)] > - \frac{1}{k}, \forall \omega \geq 0
+    \]
+    is satisfied
+\end{theorem}
