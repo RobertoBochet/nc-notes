@@ -10,10 +10,10 @@
     f(0,0)=0, \; g(0,0)=0
 \end{gather*}
 
-A dynamical system is called \textbf{passive} if there exists a \textbf{Lyapunov function} $\dV(\cdot)$ called \textbf{storage function}, such that
+A dynamical system is called \textbf{passive} if there exists a \textbf{Lyapunov function} $\V(x)$ called \textbf{storage function}, such that
 
 \[
-    uy \geq \dV (\cdot) + \epsilon u^2 + \delta y^2 + \rho \psi(x)
+    uy \geq \pd{V}{x}(x) f(x,u) + \epsilon u^2 + \delta y^2 + \rho \psi(x)
 \]
 
 with
@@ -22,10 +22,10 @@ with
     \epsilon \geq 0, \delta \geq 0, \rho \geq 0, \psi(x) > 0
 \]
 
-Note that the Lyapunov function can be written as
+Notice that the Lyapunov function can be written as
 
 \[
-    \dV(\cdot) = \frac{\partial \V}{\partial x} f(x,u)
+     \pd{\V}{x} f(x,0) = \dV(x)
 \]
 
 \subsection{Conservative system}
@@ -33,7 +33,7 @@ Note that the Lyapunov function can be written as
 A passive system is called \textbf{conservative} if $\epsilon = \delta = \rho = 0$, such that
 
 \[
-    uy = \dV (\cdot)
+    uy = \pd{V}{x}(x) f(x,u)
 \]
 
 \subsection{Strictly passive}
@@ -45,3 +45,24 @@ Strictly passive w.r.t the input if $\epsilon > 0$ \\
 Strictly passive w.r.t the output if $\delta > 0$ \\
 Strictly passive w.r.t the state if $\rho > 0$
 
+\subsection{Zero-state observable}
+
+A system is \textbf{zero-state observable} if $x(\cdot) = 0$ is the only \textbf{free evolution} (u=0) of the state compatible with identically zero output (y=0)
+
+\section{Properties}
+
+\begin{theorem}
+    If a system is \textbf{passive} with positive definite storage function, then $x=0$ is a \textbf{stable} equilibrium for the system with zero input
+\end{theorem}
+
+\begin{theorem}
+    If a system is \textbf{strictly passive w.r.t the state} with positive definite storage function, then $x=0$ is an \textbf{asymptotically stable} equilibrium for the system with zero input
+\end{theorem}
+
+\begin{theorem}
+    If a system is \textbf{strictly passive w.r.t the output} and \textbf{zero-stable observable} with positive definite storage function, then $x=0$ is an \textbf{asymptotically stable} equilibrium for the system with zero input
+\end{theorem}
+
+\begin{theorem}
+    If the storage function associated to \textbf{asymptotically stable} equilibrium is radially unbounded then the equilibrium is \textbf{GAS}
+\end{theorem}

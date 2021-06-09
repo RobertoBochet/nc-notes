@@ -53,6 +53,7 @@ bottom=30mm
 
 \newenvironment{nb}{\par\vspace{\abovedisplayskip}\noindent\begin{em}n.b.\ \ignorespaces}{\end{em}}
 
+\newcommand{\pd}[2]{\frac{\partial #1}{\partial #2}}
 
 \DeclareMathOperator{\im}{im}
 \DeclareMathOperator{\rad}{rad}
@@ -129,6 +130,10 @@ bottom=30mm
 \newcommand{\xs}{\estimate{\x}}
 \newcommand{\dxs}{\dot{\estimate{\x}}}
 \newcommand{\ddxs}{\ddot{\estimate{\x}}}
+
+\newtheorem{theorem}{Theorem}
+\newtheorem{corollary}{Corollary}[theorem]
+\newtheorem{lemma}[theorem]{Lemma}
 
 \newcommand{\warning}[1]{\textcolor{red}{WARNING #1}}
 
