@@ -1,4 +1,4 @@
-\chapter{Lur'e systems}
+\usepackage{hyperref}\usepackage{hyperref}\chapter{Lur'e systems}
 
 \section{Definition}
 
@@ -84,11 +84,11 @@ For this kind of system $\bar{x} = 0$ is an equilibrium.
     \label{fig:generic-feedback-system}
 \end{figure}
 
-A general feedback system (e.g \autoref{fig:generic-feedback-system}) containing a nonlinear function where input are constant can be traced to an \textbf{autonomous Lur'e system}.
+A general feedback system (e.g \cref{fig:generic-feedback-system}) containing a nonlinear function where input are constant can be traced to an \textbf{autonomous Lur'e system}.
 
 Chosen an equilibrium (associated to a constant inputs) and the whole system can be studied in the neighbourhood of it applying a coordinate shifting (i.e. $\Delta x(t) = x(t) - \bar x$)
 
-From the definition of constant inputs we get $\Delta y^0 = \Delta u^0 = \Delta d^0 = 0$, then we get a system like \autoref{fig:generic-feedback-system-equilibrium}, easily to retract back to an \textbf{Autonomous Lur'e system}
+From the definition of constant inputs we get $\Delta y^0 = \Delta u^0 = \Delta d^0 = 0$, then we get a system like \cref{fig:generic-feedback-system-equilibrium}, easily to retract back to an \textbf{Autonomous Lur'e system}
 
 \begin{figure}[htb]
     \centering
@@ -120,15 +120,38 @@ From the definition of constant inputs we get $\Delta y^0 = \Delta u^0 = \Delta 
 
 \section{Properties}
 
+\begin{theorem}[Nyquist criterion]\label{thm:nyquist}
+A degenerated \textbf{autonomous Lur'e system} with $\varphi(\cdot) = k$ (linearly in the error) is asymptotically stable if and only if the Nyquist plot of the linear part encircles (anti-clockwise) the point of the complex plane $-\frac{1}{k}$ as many times as the amount the unstable poles of it
+\end{theorem}
+
+\begin{theorem}\label{thm:lure-nyquist}
+    \[
+        I(k_1,k_2) = \{\alpha \in \Real : \alpha = -\frac{1}{k}, k \in [k_1,k_2]\}
+    \]
+    If \textbf{autonomous Lur'e system} is absolutely stable in the sector $[k_1,k_2]$, then the Nyquist plot of the linear part encircles (anti-clockwise) $I(k_1,k_2)$ as many times as the amount the unstable poles of it
+\end{theorem}
+
+\begin{nb}\cref{thm:lure-nyquist} defined a necessary condition for stability but not sufficient\end{nb}
+
+\begin{conjecture}[Aizerman conjecture, 1949]\label{cjt:aizerman}
+    The \cref{thm:lure-nyquist} is also sufficient for the stability of the \textbf{autonomous Lur'e system}
+\end{conjecture}
+
+\begin{nb}
+    it is possible find a counterexample for the \cref{cjt:aizerman}
+\end{nb}
+
 \subsection{Popov criterion}
 
-\begin{theorem}\label{thm:popov-stable}
+\begin{theorem}[Popov criterion, 1962]\label{thm:popov-criterion}
     An \textbf{autonomous Lur'e system} is absolutely stable in sector $[0,k]$ if the linear part is asymptotically stable and exists a real number $q$ such that
     \[
         \Re [(1+\j \omega q) G(\j \omega)] > - \frac{1}{k}, \forall \omega \geq 0
     \]
     is satisfied
 \end{theorem}
+
+\begin{nb}\cref{thm:popov-criterion} defined a sufficient condition for stability\end{nb}
 
 \subsubsection{Special case $q=0$}
 
@@ -138,7 +161,7 @@ With $q=0$ the condition is reduced to
     \Re [G(\j \omega)] > - \frac{1}{k}, \forall \omega \geq 0
 \]
 
-so the \textbf{Popov criterion} requires that the $G(\j\omega)$ polar plot is contained in the right-half-plane defined by the vertical line passing to the real point $-\frac{1}{k}$
+so the \cref{thm:popov-criterion} requires that the $G(\j\omega)$ polar plot is contained in the right-half-plane defined by the vertical line passing to the real point $-\frac{1}{k}$
 
 \subsubsection{Case $q \neq 0$}
 
@@ -147,5 +170,5 @@ so the \textbf{Popov criterion} requires that the $G(\j\omega)$ polar plot is co
     \[
         G^*(\j\omega) = \Re[G(\j\omega)] + \j\omega \Im[G(\j\omega)]
     \]
-    the \autoref{thm:popov-stable} requires that exists a straight line passing through the real point $-\frac{1}{k}$ such that the $G^*(\j\omega)$ polar plot is contained in the right-half-plane defined by it.
+    the \cref{thm:popov-criterion} requires that exists a straight line passing through the real point $-\frac{1}{k}$ such that the $G^*(\j\omega)$ polar plot is contained in the right-half-plane defined by it
 \end{corollary}
