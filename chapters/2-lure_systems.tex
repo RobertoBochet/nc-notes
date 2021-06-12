@@ -128,7 +128,7 @@ A degenerated \textbf{autonomous Lur'e system} with $\varphi(\cdot) = k$ (linear
     \[
         I(k_1,k_2) = \{\alpha \in \Real : \alpha = -\frac{1}{k}, k \in [k_1,k_2]\}
     \]
-    If \textbf{autonomous Lur'e system} is absolutely stable in the sector $[k_1,k_2]$, then the Nyquist plot of the linear part encircles (anti-clockwise) $I(k_1,k_2)$ as many times as the amount the unstable poles of it
+    If \textbf{autonomous Lur'e system} is absolutely stable in the sector $[k_1,k_2]$, then the \textbf{Nyquist plot} of the linear part encircles (anti-clockwise) $I(k_1,k_2)$ as many times as the amount the unstable poles of it
 \end{theorem}
 
 \begin{nb}\cref{thm:lure-nyquist} defined a necessary condition for stability but not sufficient\end{nb}
@@ -191,3 +191,114 @@ and with $K_N$ the largest $K$ such that the degenerated \textbf{autonomous Lur'
 \begin{nb}if $K_P = K_N$ then, the system satisfies the \textbf{Aizenman Conjecture} \end{nb}
 
 \begin{nb}$K_P < K_N$ does not imply that the system does not satisfy the \textbf{Aizenman Conjecture}\end{nb}
+
+\subsection{Generalized Popov criterion for sector $[k_1,k_2]$}
+
+Consider an \textbf{autonomous Lur'e system} with $\varphi(\cdot) \in \Phi_{[k_1,k_2]}$, then we add and subtract $k_1 e$ from $u$, like in \cref{fig:lure-system-reworked}, notice that the new system is completely equivalent to the original one
+
+\begin{figure}[htb]
+    \centering
+    \resizebox{0.7\textwidth}{!}{
+        \begin{tikzpicture}[node distance = 1cm, auto]
+            \tikzset{node distance = 1cm and 2cm}
+            \node [sum] (sum_e) {};
+            \node [node, right=.6cm of sum_e] (e_2) {};
+            \node [block, right=.6cm of e_2] (controller) {$\varphi(\cdot)$};
+            \node [block, below=.6cm of controller] (k1_1) {$k_1$};
+            \node [sum, right=1cm of controller] (sum_v) {};
+            \node [sum, right=1cm of sum_v] (sum_u) {};
+            \node [block, right=1cm of sum_u] (system) {$G(s)$};
+            \node [block, below=.6cm of system] (k1_2) {$k_1$};
+            \node [node, right=.6cm of system] (y_1) {};
+            \node [node, right=.6cm of y_1] (y) {};
+
+            \node [output, right=.6cm of y] (oy) {};
+
+            \draw [->] (sum_e) -- node {$e$} (controller);
+            \draw [->] (e_2) |- (k1_1);
+
+            \draw [->] (controller) -- (sum_v);
+            \draw [->] (k1_1) -| node [pos=0.9] {$-$} (sum_v);
+            \draw [->] (sum_v) -- node {$v$} (sum_u);
+            \draw [->] (sum_u) -- node {$u$} (system);
+            \draw [->] (system) -- node [pos=0.8] {$y$} (oy);
+            \draw [->] (y_1) |- (k1_2);
+            \draw [->] (k1_2) -| node [pos=0.9] {$-$} (sum_u);
+
+            \draw [->] (y) -- ++(0,-3) -| node [pos=0.95] {$-$} (sum_e);
+        \end{tikzpicture}
+    }
+    \caption{Autonomous Lur'e system reworked}
+    \label{fig:lure-system-reworked}
+\end{figure}
+
+Now, we rewrite the block diagram in the standard shape of a \textbf{autonomous Lur'e system} like in the \cref{fig:lure-system-reqworked-compact}, where
+
+\begin{gather*}
+    F(s) = \frac{G(s)}{1+k_1 G(s)} \\
+    \eta(e) = \varphi(e) - k_1 e, \qquad \eta(e) \in \Phi_{[0,k_2-k_1]}
+\end{gather*}
+
+\begin{figure}[htb]
+    \centering
+    \resizebox{0.7\textwidth}{!}{
+        \begin{tikzpicture}
+            \node [sum] (sum_e) {};
+
+            \node [block, right=1cm of sum_e] (controller) {$\eta(\cdot)$};
+            \node [block, right=1cm of controller] (system) {$F(s)$};
+
+            \node [output, right=1cm of system] (oy) {};
+
+            \draw [->] (sum_e) -- node {$e$} (controller);
+            \draw [->] (controller) -- node {$u$} (system);
+            \draw [->] (system) -- node [pos=0.8] {$y$} node [node, name=y, pos=0.5] {} (oy);
+
+            \draw [->] (y) -- ++(0,-1.5) -| node [pos=0.95] {$-$} (sum_e);
+        \end{tikzpicture}
+    }
+    \caption{Compact autonomous Lur'e system reworked}
+    \label{fig:lure-system-reqworked-compact}
+\end{figure}
+
+So, due to the equivalence of the original system and the reworked one we can formulate a generalized version of the \textbf{Popov criterion}
+
+\begin{theorem}\label{thm:popov-criterion-generalized}
+    An \textbf{autonomous Lur'e system} is absolutely stable in sector $[k_1,k_2]$ if $F(s)$ is asymptotically stable and exists a real number $q$ such that
+\[
+    \Re \left[(1+\j \omega q) F(s)\right] > - \frac{1}{k_2-k_1}, \forall \omega \geq 0
+\]
+is satisfied when
+\[
+    F(s) = \frac{G(s)}{1+k_1 G(s)}
+\]
+\end{theorem}
+
+\subsubsection{The special case $q=0$}
+
+The condition required by the \cref{thm:popov-criterion-generalized} with an imposed $q=0$ became $F(s)$ asymptotically stable and
+\[
+    \Re \left[F(s)\right] > - \frac{1}{k_2-k_1}, \; \forall \omega \geq 0
+\]
+
+The first condition can be checked remembering that $F(s)$ is a feedback system composed by the loop function $k_1 G(s)$, so exploiting the \textbf{Nyquist criterion} we can assert that $F(s)$ is an asymptotically stable system if the \textbf{Nyquist plot} of $G(s)$ encircles (anti-clockwise) the point $-\frac{1}{k_1}$ as many times the number of unstable poles of $G(s)$.
+
+The second one can be rewrite like a condition on the polar plot of $G(s)$ instead of the one of $F(s)$. Considering that
+\[
+    G(s) = \frac{F(s)}{1 - k_1 F(s)}
+\]
+
+we can map the right-half-plane ($>-\frac{1}{k_2 - k_1}$) in which the polar plot of $F(s)$ must be contained, to a circle where the polar plot of $G(s)$ must not go in. This circle is defined as
+
+\[
+    O(k_1,k_2) = \{\tilde{s} \in \Complex : \tilde{s} = \frac{s}{1-k_1 s}, s = \alpha + \j \beta, \alpha \leq - \frac{1}{k_2 - k_1}\}
+\]
+
+Merging the two conditions we can formulate the \textbf{Circle criterion}
+
+\begin{theorem}[Circle criterion]
+    An \textbf{autonomous Lur'e system} is absolutely stable in sector $[k_1,k_2]$ if the \textbf{Nyquist plot} of $G(s)$ encircles (anti-clockwise) the circle $O(k_1, k_2)$ as many time the number of unstable poles of $G(s)$, with
+    \[
+        O(k_1,k_2) = \{\tilde{s} \in \Complex : \tilde{s} = \frac{s}{1-k_1 s}, s = \alpha + \j \beta, \alpha \leq - \frac{1}{k_2 - k_1}\}
+    \]
+\end{theorem}
