@@ -1,0 +1,89 @@
+\chapter{Variable structure control}
+
+\section{Definition}
+
+\begin{figure}[htb]
+    \centering
+    \resizebox{0.7\textwidth}{!}{
+        \begin{tikzpicture}
+            \node [sum] (sum_e) {};
+
+            \node [block, right=1cm of sum_e] (controller) {$\psi(\cdot)$};
+            \node [block, above=1cm of controller] (switching_law) {$s(\cdot) > 0$};
+            \node [block, right=1cm of controller] (system) {$G(s)$};
+
+            \node [output, right=1cm of system] (oy) {};
+
+            \draw [->] (sum_e) -- node {$e$} (controller);
+            \draw [->] (switching_law) -- (controller);
+            \draw [->] (controller) -- node {$u$} (system);
+            \draw [->] (system) |- node [pos=0.8] {$x$} (switching_law);
+            \draw [->] (system) -- node [pos=0.8] {$y$} node [node, name=y, pos=0.5] {} (oy);
+
+            \draw [->] (y) -- ++(0,-1.5) -| node [pos=0.95] {$-$} (sum_e);
+        \end{tikzpicture}
+    }
+    \caption{Example of VSC}
+    \label{fig:vsc-example}
+\end{figure}
+
+In \cref{fig:vsc-example} is shown an example of the structure of a typical \textbf{VSC}, in particular we have a piecewise control law, based on the switching function $s(x) > 0$.
+
+\[
+    \psi(e) = \begin{cases}
+                  \varphi_1(e), \qquad s(x) > 0 \\
+                  \varphi_2(e), \qquad s(x) < 0
+              \end{cases}
+\]
+
+given this control law we get two different overall systems, one based on the control law for $s(x)>0$ and one for $s(x)<0$ (\cref{fig:vcs-two-systems}).
+
+\begin{figure}[htb]
+    \centering
+    \begin{subfigure}[b]{0.45\textwidth}
+        \resizebox{\textwidth}{!}{
+            \begin{tikzpicture}
+                \node [sum] (sum_e) {};
+
+                \node [block, right=1cm of sum_e] (controller) {$\varphi_1(\cdot)$};
+                \node [block, right=1cm of controller] (system) {$G(s)$};
+
+                \node [output, right=1cm of system] (oy) {};
+
+                \draw [->] (sum_e) -- node {$e$} (controller);
+                \draw [->] (controller) -- node {$u$} (system);
+                \draw [->] (system) -- node [pos=0.8] {$y$} node [node, name=y, pos=0.5] {} (oy);
+
+                \draw [->] (y) -- ++(0,-1.5) -| node [pos=0.95] {$-$} (sum_e);
+            \end{tikzpicture}
+        }
+        \caption{$s(x)>0$}
+        \label{fig:vcs-two-systems-a}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}[b]{0.45\textwidth}
+        \resizebox{\textwidth}{!}{
+            \begin{tikzpicture}
+                \node [sum] (sum_e) {};
+
+                \node [block, right=1cm of sum_e] (controller) {$\varphi_2(\cdot)$};
+                \node [block, right=1cm of controller] (system) {$G(s)$};
+
+                \node [output, right=1cm of system] (oy) {};
+
+                \draw [->] (sum_e) -- node {$e$} (controller);
+                \draw [->] (controller) -- node {$u$} (system);
+                \draw [->] (system) -- node [pos=0.8] {$y$} node [node, name=y, pos=0.5] {} (oy);
+
+                \draw [->] (y) -- ++(0,-1.5) -| node [pos=0.95] {$-$} (sum_e);
+            \end{tikzpicture}
+        }
+        \caption{$s(x)<0$}
+        \label{fig:vcs-two-systems-b}
+    \end{subfigure}
+    \caption{The two systems under the switching law}
+    \label{fig:vcs-two-systems}
+\end{figure}
+
+\begin{nb}the stability of the two systems tells us nothing about the stability of the overall one\end{nb}
+
