@@ -1,4 +1,4 @@
-\chapter{Variable structure control}
+\usepackage{amsmath}\usepackage{amsmath}\chapter{Variable structure control}
 
 \section{Definition}
 
@@ -121,10 +121,10 @@ Suppose to put in the controllable canonical form the linear system, so the syst
 A possible choice for the switching function can be
 
 \[
-    s(x) = \beta_{n-1} x_1 + \beta_{n-2} x_2 + \dots + \beta_1 x_{n-1} + x_n - \bar w
+    s(\vect x) = \beta_{n-1} x_1 + \beta_{n-2} x_2 + \dots + \beta_1 x_{n-1} + x_n - \bar w
 \]
 
-on the boundary $s(x)=0$ the system is subjected to the constraint
+on the boundary $s(\vect x)=0$ the system is subjected to the constraint
 
 \[
     x_n = - \beta_{n-1} x_1 - \beta_{n-2} x_2 - \dots - \beta_1 x_{n-1} + \bar w
@@ -156,6 +156,67 @@ which roots can be arbitrarily assigned such that the system became asymptotical
     \end{cases}
 \]
 
-and imposing $\bar w = \frac{\beta_{n-1}}{b_n} \bar y^0$ we get $\bar y = \bar y^0$.
+and imposing $\bar w = \frac{\beta_{n-1}}{b_n} \bar y^0$ we get $\bar y = \bar y^0$ and the switching law become
 
-So, the switching law drives the state from any point of $s(x)=0$ to the equilibrium $\bar y = \bar y^0$ following an arbitrary dynamic.
+\begin{equation}
+    s(\vect x) = \vect \beta^\trans \vect x - \gamma \bar y^0, \qquad
+    \vect \beta^\trans = \begin{bmatrix}
+                             \beta_{n-1}, \beta_{n-2}, \dots,  \beta_1, 1
+    \end{bmatrix},
+    \gamma = \frac{\beta_{n-1}}{b_n}
+    \label{eqn:switching-law}
+\end{equation}
+
+So, the switching law drives the state from any point of $s(\vect x)=0$ to the equilibrium $\bar y = \bar y^0$ following an arbitrary dynamic.
+
+\subsection{Design the control law}
+
+The switching law will drive the state from any point $s(\vect x) = 0$ to the arbitrarily equilibrium, so the control law $u(\vect x)$ will have to drive the state from any point of the vector space to a point of the boundary $s(\vect x) = 0$ in finite time.
+
+The goal: impose the dynamics of $s(\vect x)$ such that from any point of vector field the state reaches $s(\vect x) = 0$.
+
+We shall adopt the so-called "reaching-law approach" to impose the reaching condition.
+
+Defining the dynamics of the switching law such that Lyapunov function
+
+\[
+    V(s) = \frac{1}{2} s^2
+\]
+
+has negative time derivative satisfying
+
+\[
+    \diff{V}{t} = s \dot s \leq - \eta |s|, \quad \eta > 0
+\]
+
+Let us propose the dynamics
+
+\[
+    \dot s = -q \sgn(s) - r g(s), \qquad q> 0, r \geq 0, g(\cdot) : sg(s) > 0, \forall s \neq 0
+\]
+
+for which
+
+\[
+    \diff{V}{t} = s \dot s = -q \sgn(s) s - r s g(s) = -q |s| - r s g(s) \leq - q |s|
+\]
+
+that satisfy the reaching condition in finite time (with $\eta = q$).
+
+\subsubsection{Impose the switching law dynamics}
+
+Differencing with respect the time the \cref{eqn:switching-law} we get
+
+\[
+    \dot s = \vect \beta^\trans \dot{\vect x} = \vect \beta^\trans (A \vect x + B u)
+\]
+
+\begin{align*}
+    \vect \beta^\trans (A \vect x + B u) &= -q \sgn(s) - r g(s) \\
+    u &= - \vect \beta^\trans A \vect x -q \sgn(s) - r g(s) \\
+    u &= - \vect \beta^\trans A \vect x -q \sgn(\vect \beta^\trans \vect x - \gamma \bar y^0) - r g(\vect \beta^\trans \vect x - \gamma \bar y^0) \\
+    u &= - \vect \beta^\trans A \vect x + q \sgn(\gamma \bar y^0 - \vect \beta^\trans \vect x) - r g(\vect \beta^\trans \vect x - \gamma \bar y^0) \\
+    \intertext{$g(s)$ is a odd function from definition, $g(-s)=-g(s)$}
+    u &= - \vect \beta^\trans A \vect x + q \sgn(\gamma \bar y^0 - \vect \beta^\trans \vect x) + r g(\gamma \bar y^0 - \vect \beta^\trans \vect x)
+\end{align*}
+
