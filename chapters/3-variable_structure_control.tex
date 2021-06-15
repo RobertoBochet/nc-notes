@@ -87,3 +87,17 @@ given this control law we get two different overall systems, one based on the co
 
 \begin{nb}the stability of the two systems tells us nothing about the stability of the overall one\end{nb}
 
+Considering the vector fields drive the evolution of the states of the two systems (\cref{fig:vcs-two-systems}), the switching law defines a new piecewise vector field merging these two.
+
+The inside boundaries of the new piecewise vector field can be of two kinds:
+
+\begin{itemize}
+    \item Across switching surface
+
+    the state reaches the boundary while following some dynamics, crosses it, and continues its evolution according to the other dynamics
+
+    \item Attractive switching surface
+
+    the state reaches the boundary and cannot leave it because the vector fields on both sides are pointing towards the boundary;
+    the state can evolve only sliding along the boundary, the system lose a dof (sliding mode)
+\end{itemize}
