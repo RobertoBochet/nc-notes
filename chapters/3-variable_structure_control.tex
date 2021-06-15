@@ -101,3 +101,61 @@ The inside boundaries of the new piecewise vector field can be of two kinds:
     the state reaches the boundary and cannot leave it because the vector fields on both sides are pointing towards the boundary;
     the state can evolve only sliding along the boundary, the system lose a dof (sliding mode)
 \end{itemize}
+
+\section{Design}
+
+Given a linear time-invariant SISO system of order $n$ with $(A,B)$ controllable and $(A,C)$ observable, we want design a variable structure controller such that $y(t)$ tends to some (constant) reference signal $\bar y^0$ in some reasonable amount of time, for all $\bar y^0$ and for all possible initial state.
+
+Suppose to put in the controllable canonical form the linear system, so the system can be define as
+
+\[
+    \begin{cases}
+        \dx_i = x_{i+1}, \qquad i = 1,2,\dots, n-1 \\
+        \dx_n = - a_n x_1 - a_{n-1} x_2 - \dots - a_1 x_n + u \\
+        y = b_n x_1 + b_{n-1} x_2 + \dots + b_1 x_n
+    \end{cases}
+\]
+
+\subsection{Design the switching function}
+
+A possible choice for the switching function can be
+
+\[
+    s(x) = \beta_{n-1} x_1 + \beta_{n-2} x_2 + \dots + \beta_1 x_{n-1} + x_n - \bar w
+\]
+
+on the boundary $s(x)=0$ the system is subjected to the constraint
+
+\[
+    x_n = - \beta_{n-1} x_1 - \beta_{n-2} x_2 - \dots - \beta_1 x_{n-1} + \bar w
+\]
+
+so, the overall system became
+
+\[
+    \begin{cases}
+        \dx_i = x_{i+1}, \qquad i = 1,2,\dots, n-2 \\
+        \dx_{n-1} = x_n = - \beta_{n-1} x_1 - \beta_{n-2} x_2 - \dots - \beta_1 x_{n-1} + \bar w \\
+        y = b_n x_1 + b_{n-1} x_2 + \dots + b_1 x_n
+    \end{cases}
+\]
+
+this system has the characteristic polynomial defined as
+
+\[
+    \chi(s) = s^{n-1} + \beta_1 s^{n-2} + \dots + \beta_{n-1}
+\]
+
+which roots can be arbitrarily assigned such that the system became asymptotically stable with a single equilibrium defined as
+
+\[
+    \begin{cases}
+        \bar x_i = 0, \qquad i = 2,3,\dots, n-1 \\
+        \bar x_1 = \frac{\bar w}{\beta_{n-1}} \\
+        \bar y = b_n \bar x_1
+    \end{cases}
+\]
+
+and imposing $\bar w = \frac{\beta_{n-1}}{b_n} \bar y^0$ we get $\bar y = \bar y^0$.
+
+So, the switching law drives the state from any point of $s(x)=0$ to the equilibrium $\bar y = \bar y^0$ following an arbitrary dynamic.
