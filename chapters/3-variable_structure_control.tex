@@ -1,4 +1,4 @@
-\usepackage{amsmath}\usepackage{amsmath}\chapter{Variable structure control}
+\chapter{Variable structure control}
 
 \section{Definition}
 
@@ -220,3 +220,56 @@ Differencing with respect the time the \cref{eqn:switching-law} we get
     u &= - \vect \beta^\trans A \vect x + q \sgn(\gamma \bar y^0 - \vect \beta^\trans \vect x) + r g(\gamma \bar y^0 - \vect \beta^\trans \vect x)
 \end{align*}
 
+The resulting control system are shown in \cref{fig:vsc-control}.
+
+The control law implements a 2-level hysteresis switching controller.
+
+\begin{nb}hysteresis avoids infinitely fast switching\end{nb}
+
+\begin{figure}[htb]
+    \centering
+    \resizebox{\textwidth}{!}{
+    \begin{tikzpicture}
+        \node [input] (iy_d) {};
+
+        \node [block, right=0.6cm of iy_d] (gamma) {$\gamma$};
+        \node [sum, right=.6cm of gamma] (sum_e) {};
+        \node [block, right=1cm of sum_e] (sgn) {$\sgn(\cdot)$};
+        \node [block, above=1cm of sgn] (g) {$g(\cdot)$};
+        \node [block, right=0.6cm of sgn] (q) {$q$};
+        \node [block, above=1cm of q] (r) {$r$};
+
+        \node [block, below=2cm of sgn] (beta) {$\vect \beta^\trans$};
+
+        \node [sum, right=0.6cm of q] (sum_u) {};
+        \node [block, right=1cm of sum_u] (system) {$G(s)$};
+        \node [block, below=.8cm of system] (alpha) {$\vect \beta^\trans A$};
+
+        \node [output, right=1cm of system, yshift=0.3cm] (oy) {};
+
+        \node [node, right=.5 of alpha] (xalpha) {};
+
+        \draw [->] (iy_d) -- node[pos=0.2] {$\bar y^0$} (gamma);
+
+        \draw [->] (gamma) -- (sum_e);
+        \draw [->] (sum_e) -- node[node, name=s2, pos=.5] {} node[swap]{$-s$} (sgn);
+        \draw [->] (s2) |- (g);
+        \draw [->] (sgn) -- (q);
+        \draw [->] (g) -- (r);
+        \draw [->] (q) -- (sum_u);
+        \draw [->] (r) -| (sum_u);
+        \draw [->] (sum_u) -- node {$u$} (system);
+
+        \draw [->] (alpha) -| node[pos=0.9] {$-$} (sum_u);
+
+        \draw [->] (system)[yshift=-.3cm] -| node[pos=0.6] {$x$} (xalpha) |- (beta);
+        \draw [->] (xalpha) -- (alpha);
+
+        \draw [->] (beta) -| node[pos=0.9] {$-$} (sum_e);
+
+        \draw [->] (system.east |- oy) -- node [pos=0.7] {$y$} (oy);
+    \end{tikzpicture}
+    }
+    \caption{Designed control law}
+    \label{fig:vsc-control}
+\end{figure}
