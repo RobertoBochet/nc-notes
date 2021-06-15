@@ -192,7 +192,7 @@ has negative time derivative satisfying
 Let us propose the dynamics
 
 \[
-    \dot s = -q \sgn(s) - r g(s), \qquad q> 0, r \geq 0, g(\cdot) : sg(s) > 0, \forall s \neq 0
+    \dot s = -q \sgn(s) - r g(s), \qquad q> 0, r \geq 0, g(\cdot) : g(-s)=-g(s), sg(s) > 0, \forall s \neq 0
 \]
 
 for which
@@ -222,9 +222,9 @@ Differencing with respect the time the \cref{eqn:switching-law} we get
 
 The resulting control system are shown in \cref{fig:vsc-control}.
 
-The control law implements a 2-level hysteresis switching controller.
+In order to avoids infinitely fast switching a goo rule is implement the $\sgn(\cdot)$ function as a 2-level hysteresis switching controller.
 
-\begin{nb}hysteresis avoids infinitely fast switching\end{nb}
+\begin{nb}In order to avoid infinitely fast switching a good rule can be to implement the $\sgn(\cdot)$ function as a 2-level hysteresis switching\end{nb}
 
 \begin{figure}[htb]
     \centering
@@ -273,3 +273,9 @@ The control law implements a 2-level hysteresis switching controller.
     \caption{Designed control law}
     \label{fig:vsc-control}
 \end{figure}
+
+The so designed control law guaranteed a transitory time $\leq \frac{|s(x(t_r))|}{q}$
+
+Good performance can be reached also with $r = 0$ because the transitory time is bound to $q$, but a good choice of $r$ and $g(s)$ can enhance the performance while it is not affecting the excursion of $u$.
+
+A valid choice of $g(s)$ can be $g(s) = s$ and $r=1$
