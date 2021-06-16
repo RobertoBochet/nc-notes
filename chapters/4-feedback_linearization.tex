@@ -1,0 +1,40 @@
+\chapter{Feedback linearization}
+
+\section{Definition}
+
+Given a nonlinear system in the form
+
+\[
+    \begin{cases}
+        \dot x = a(x) + b(x) u \\
+        y = c(x)
+    \end{cases}
+\]
+
+design a static state feedback control law $u = k(x,v)$ such that the associated feedback system is linear.
+
+\begin{nb} the system is linear w.r.t. input\end{nb}
+
+\begin{example}
+    Model of a centrifuge
+
+    \[
+        J \ddot\tetha = -k \dot \theta^2 \sgn(\dot \theta) + u
+    \]
+
+    setting $x = \dot\theta$ the system can be written
+
+    \begin{cases}
+        \dot x = - \frac{k}{J} x^2 \sgn(x) + \frac{1}{J} u \\
+        y = x
+    \end{cases}
+
+    if we set $u = - \frac{k}{J}x^2 \sgn(x) + \frac{1}{J}u$ the system become
+
+    \begin{cases}
+        \dot x = v \\
+        y = x
+    \end{cases}
+
+    the feedback system seen from outside seems linear, and a controller for linear system can be made using the input $v$ and the output $y$.
+\end{example}
