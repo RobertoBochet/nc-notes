@@ -112,8 +112,28 @@ Suppose to put in the controllable canonical form the linear system, so the syst
     \begin{cases}
         \dx_i = x_{i+1}, \qquad i = 1,2,\dots, n-1 \\
         \dx_n = - a_n x_1 - a_{n-1} x_2 - \dots - a_1 x_n + u \\
-        y = b_n x_1 + b_{n-1} x_2 + \dots + b_1 x_n
+        y = c_n x_1 + c_{n-1} x_2 + \dots + c_1 x_n
     \end{cases}
+\]
+
+or in the compact form
+
+\[
+    \begin{cases}
+        \dx = A \x + B u \\
+        y = C \x
+    \end{cases} \\
+
+    A = \begin{bmatrix}
+            0 & 1 & 0 & \dots & 0 & 0 \\
+            0 & 0 & 1 & \dots & 0 & 0 \\
+            0 & 0 & 0 & \dots & 0 & 0 \\
+            \dots & \dots & \dots & \dots & \dots & \dots \\
+            0 & 0 & 0 & \dots & 0 & 1 \\
+            -a_n & -a_{n-1} & -a_{n-2} & \dots & -a_2 & -a_1
+    \end{bmatrix},
+    B = \begin{bmatrix} 0 \\ 0 \\ 0 \\ \vdots \\ 0 \\ 1 \end{bmatrix},
+    C^{\trans} = \begin{bmatrix} c_n \\ c_{n-1} \\ c_{n-2} \\ \vdots \\ c_2 \\ c_1 \end{bmatrix}
 \]
 
 \subsection{Design the switching function}
@@ -136,7 +156,7 @@ so, the overall system became
     \begin{cases}
         \dx_i = x_{i+1}, \qquad i = 1,2,\dots, n-2 \\
         \dx_{n-1} = x_n = - \beta_{n-1} x_1 - \beta_{n-2} x_2 - \dots - \beta_1 x_{n-1} + \bar w \\
-        y = b_n x_1 + b_{n-1} x_2 + \dots + b_1 x_n
+        y = c_n x_1 + c_{n-1} x_2 + \dots + c_1 x_n
     \end{cases}
 \]
 
@@ -152,18 +172,16 @@ which roots can be arbitrarily assigned such that the system became asymptotical
     \begin{cases}
         \bar x_i = 0, \qquad i = 2,3,\dots, n-1 \\
         \bar x_1 = \frac{\bar w}{\beta_{n-1}} \\
-        \bar y = b_n \bar x_1
+        \bar y = c_n \bar x_1
     \end{cases}
 \]
 
-and imposing $\bar w = \frac{\beta_{n-1}}{b_n} \bar y^0$ we get $\bar y = \bar y^0$ and the switching law become
+and imposing $\bar w = \frac{\beta_{n-1}}{c_n} \bar y^0$ we get $\bar y = \bar y^0$ and the switching law become
 
 \begin{equation}
     s(\vect x) = \vect \beta^\trans \vect x - \gamma \bar y^0, \qquad
-    \vect \beta^\trans = \begin{bmatrix}
-                             \beta_{n-1}, \beta_{n-2}, \dots,  \beta_1, 1
-    \end{bmatrix},
-    \gamma = \frac{\beta_{n-1}}{b_n}
+    \vect \beta^\trans = \begin{bmatrix} \beta_{n-1} & \beta_{n-2} & \dots & \beta_1 & 1 \end{bmatrix},
+    \gamma = \frac{\beta_{n-1}}{c_n}
     \label{eqn:switching-law}
 \end{equation}
 
@@ -221,8 +239,6 @@ Differencing with respect the time the \cref{eqn:switching-law} we get
 \end{align*}
 
 The resulting control system are shown in \cref{fig:vsc-control}.
-
-In order to avoids infinitely fast switching a goo rule is implement the $\sgn(\cdot)$ function as a 2-level hysteresis switching controller.
 
 \begin{nb}In order to avoid infinitely fast switching a good rule can be to implement the $\sgn(\cdot)$ function as a 2-level hysteresis switching\end{nb}
 
