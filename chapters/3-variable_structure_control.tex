@@ -33,10 +33,10 @@ In \cref{fig:vsc-example} is shown an example of the structure of a typical \tex
     \psi(e) = \begin{cases}
                   \varphi_1(e), \qquad s(x) > 0 \\
                   \varphi_2(e), \qquad s(x) < 0
-              \end{cases}
+    \end{cases}
 \]
 
-given this control law we get two different overall systems, one based on the control law for $s(x)>0$ and one for $s(x)<0$ (\cref{fig:vcs-two-systems}).
+given this control law we get two different overall systems, one based on the control law for $s(x) > 0$ and one for $s(x) < 0$ (\cref{fig:vcs-two-systems}).
 
 \begin{figure}[htb]
     \centering
@@ -106,7 +106,7 @@ The inside boundaries of the new piecewise vector field can be of two kinds:
 
 Given a linear time-invariant SISO system of order $n$ with $(A,B)$ controllable and $(A,C)$ observable, we want design a variable structure controller such that $y(t)$ tends to some (constant) reference signal $\bar y^0$ in some reasonable amount of time, for all $\bar y^0$ and for all possible initial state.
 
-Suppose to put in the controllable canonical form the linear system, so the system can be define as
+Suppose to put in the controllable canonical form the linear system, so the system can be defined as
 
 \[
     \begin{cases}
@@ -118,12 +118,11 @@ Suppose to put in the controllable canonical form the linear system, so the syst
 
 or in the compact form
 
-\[
+\begin{gather*}
     \begin{cases}
         \dx = A \x + B u \\
         y = C \x
     \end{cases} \\
-
     A = \begin{bmatrix}
             0 & 1 & 0 & \dots & 0 & 0 \\
             0 & 0 & 1 & \dots & 0 & 0 \\
@@ -134,7 +133,7 @@ or in the compact form
     \end{bmatrix},
     B = \begin{bmatrix} 0 \\ 0 \\ 0 \\ \vdots \\ 0 \\ 1 \end{bmatrix},
     C^{\trans} = \begin{bmatrix} c_n \\ c_{n-1} \\ c_{n-2} \\ \vdots \\ c_2 \\ c_1 \end{bmatrix}
-\]
+\end{gather*}
 
 \subsection{Design the switching function}
 
@@ -238,53 +237,53 @@ Differencing with respect the time the \cref{eqn:switching-law} we get
     u &= - \vect \beta^\trans A \vect x + q \sgn(\gamma \bar y^0 - \vect \beta^\trans \vect x) + r g(\gamma \bar y^0 - \vect \beta^\trans \vect x)
 \end{align*}
 
-The resulting control system are shown in \cref{fig:vsc-control}.
+The resulting control system is shown in \cref{fig:vsc-control}.
 
-\begin{nb}In order to avoid infinitely fast switching a good rule can be to implement the $\sgn(\cdot)$ function as a 2-level hysteresis switching\end{nb}
+\begin{nb}in order to avoid infinitely fast switching a good rule can be to implement the $\sgn(\cdot)$ function as a 2-level hysteresis switching\end{nb}
 
 \begin{figure}[htb]
     \centering
     \resizebox{\textwidth}{!}{
-    \begin{tikzpicture}
-        \node [input] (iy_d) {};
+        \begin{tikzpicture}
+            \node [input] (iy_d) {};
 
-        \node [block, right=0.6cm of iy_d] (gamma) {$\gamma$};
-        \node [sum, right=.6cm of gamma] (sum_e) {};
-        \node [block, right=1cm of sum_e] (sgn) {$\sgn(\cdot)$};
-        \node [block, above=1cm of sgn] (g) {$g(\cdot)$};
-        \node [block, right=0.6cm of sgn] (q) {$q$};
-        \node [block, above=1cm of q] (r) {$r$};
+            \node [block, right=0.6cm of iy_d] (gamma) {$\gamma$};
+            \node [sum, right=.6cm of gamma] (sum_e) {};
+            \node [block, right=1cm of sum_e] (sgn) {$\sgn(\cdot)$};
+            \node [block, above=1cm of sgn] (g) {$g(\cdot)$};
+            \node [block, right=0.6cm of sgn] (q) {$q$};
+            \node [block, above=1cm of q] (r) {$r$};
 
-        \node [block, below=2cm of sgn] (beta) {$\vect \beta^\trans$};
+            \node [block, below=2cm of sgn] (beta) {$\vect \beta^\trans$};
 
-        \node [sum, right=0.6cm of q] (sum_u) {};
-        \node [block, right=1cm of sum_u] (system) {$G(s)$};
-        \node [block, below=.8cm of system] (alpha) {$\vect \beta^\trans A$};
+            \node [sum, right=0.6cm of q] (sum_u) {};
+            \node [block, right=1cm of sum_u] (system) {$G(s)$};
+            \node [block, below=.8cm of system] (alpha) {$\vect \beta^\trans A$};
 
-        \node [output, right=1cm of system, yshift=0.3cm] (oy) {};
+            \node [output, right=1cm of system, yshift=0.3cm] (oy) {};
 
-        \node [node, right=.5 of alpha] (xalpha) {};
+            \node [node, right=.5 of alpha] (xalpha) {};
 
-        \draw [->] (iy_d) -- node[pos=0.2] {$\bar y^0$} (gamma);
+            \draw [->] (iy_d) -- node[pos=0.2] {$\bar y^0$} (gamma);
 
-        \draw [->] (gamma) -- (sum_e);
-        \draw [->] (sum_e) -- node[node, name=s2, pos=.5] {} node[swap]{$-s$} (sgn);
-        \draw [->] (s2) |- (g);
-        \draw [->] (sgn) -- (q);
-        \draw [->] (g) -- (r);
-        \draw [->] (q) -- (sum_u);
-        \draw [->] (r) -| (sum_u);
-        \draw [->] (sum_u) -- node {$u$} (system);
+            \draw [->] (gamma) -- (sum_e);
+            \draw [->] (sum_e) -- node[node, name=s2, pos=.5] {} node[swap]{$-s$} (sgn);
+            \draw [->] (s2) |- (g);
+            \draw [->] (sgn) -- (q);
+            \draw [->] (g) -- (r);
+            \draw [->] (q) -- (sum_u);
+            \draw [->] (r) -| (sum_u);
+            \draw [->] (sum_u) -- node {$u$} (system);
 
-        \draw [->] (alpha) -| node[pos=0.9] {$-$} (sum_u);
+            \draw [->] (alpha) -| node[pos=0.9] {$-$} (sum_u);
 
-        \draw [->] (system)[yshift=-.3cm] -| node[pos=0.6] {$x$} (xalpha) |- (beta);
-        \draw [->] (xalpha) -- (alpha);
+            \draw [->] (system)[yshift=-.3cm] -| node[pos=0.6] {$x$} (xalpha) |- (beta);
+            \draw [->] (xalpha) -- (alpha);
 
-        \draw [->] (beta) -| node[pos=0.9] {$-$} (sum_e);
+            \draw [->] (beta) -| node[pos=0.9] {$-$} (sum_e);
 
-        \draw [->] (system.east |- oy) -- node [pos=0.7] {$y$} (oy);
-    \end{tikzpicture}
+            \draw [->] (system.east |- oy) -- node [pos=0.7] {$y$} (oy);
+        \end{tikzpicture}
     }
     \caption{Designed control law}
     \label{fig:vsc-control}
@@ -307,7 +306,7 @@ The procedure for design the switching function and control law will be the same
 The control law become
 
 \[
-    u &= - \vect \beta^\trans A \xs + q \sgn(\gamma \bar y^0 - \vect \beta^\trans \xs) + r g(\gamma \bar y^0 - \vect \beta^\trans \xs)
+    u = - \vect \beta^\trans A \xs + q \sgn(\gamma \bar y^0 - \vect \beta^\trans \xs) + r g(\gamma \bar y^0 - \vect \beta^\trans \xs)
 \]
 
 with
