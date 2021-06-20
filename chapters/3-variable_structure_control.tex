@@ -295,3 +295,95 @@ The so designed control law guaranteed a transitory time $\leq \frac{|s(x(t_r))|
 Good performance can be reached also with $r = 0$ because the transitory time is bound to $q$, but a good choice of $r$ and $g(s)$ can enhance the performance while it is not affecting the excursion of $u$.
 
 A valid choice of $g(s)$ can be $g(s) = s$ and $r=1$
+
+\section{Variations}
+
+\subsection{Non-directly accessible state}
+
+Under the assumption $(A,C)$ is observable, although the state is not directly measurable, we can design a \textbf{asymptotic state observer} in order to get an estimation of the system's state, then we can use it in the control law instead of the real one.
+
+The procedure for design the switching function and control law will be the same for the available state case, it will be added only an \textbf{asymptotic state observer} fed by the \textbf{control law} and the \textbf{system's output} as in \cref{fig:vsc-control-nostate}.
+
+The control law become
+
+\[
+    u &= - \vect \beta^\trans A \xs + q \sgn(\gamma \bar y^0 - \vect \beta^\trans \xs) + r g(\gamma \bar y^0 - \vect \beta^\trans \xs)
+\]
+
+with
+
+\[
+    \dxs = A\xs + Bu + L(y - C\xs)
+\]
+
+$L$ can be arbitrarily chosen(due to $(A,C)$ is observable) in order to assign the wanted dynamic to the prediction error
+
+\[
+    \de = (A - LC) \e, \qquad \e = \x - \xs
+\]
+
+so
+
+\[
+    \norm{\e(t)} \leq \mu e^{-\lambda_0 t}\norm{e(0)}, t \geq 0
+\]
+
+where $\lambda_0$ is the the real part of the slowest pole of the error dynamics.
+
+\begin{nb}after the transitory ends during which $e\ne 0$, the system with observer reaches exactly the same performance of the equivalent system without the observer because $\x = \xs$\end{nb}
+
+\begin{figure}[htb]
+    \centering
+    \resizebox{\textwidth}{!}{
+        \begin{tikzpicture}
+            \node [input] (iy_d) {};
+
+            \node [block, right=0.6cm of iy_d] (gamma) {$\gamma$};
+            \node [sum, right=.6cm of gamma] (sum_e) {};
+            \node [block, right=1cm of sum_e] (sgn) {$\sgn(\cdot)$};
+            \node [block, above=1cm of sgn] (g) {$g(\cdot)$};
+            \node [block, right=0.6cm of sgn] (q) {$q$};
+            \node [block, above=1cm of q] (r) {$r$};
+
+            \node [block, below=2cm of sgn] (beta) {$\vect \beta^\trans$};
+
+            \node [sum, right=0.6cm of q] (sum_u) {};
+            \node [block, right=1cm of sum_u] (system) {$G(s)$};
+            \node [block, below=.8cm of sum_u] (alpha) {$\vect \beta^\trans A$};
+            \node [block] at (beta -| system) (observer) {$O$};
+
+            \node [output, right=1cm of system] (oy) {};
+            \node [node] at (observer -| alpha) (x) {};
+
+            %\node [node, right=.5 of alpha] (xalpha) {};
+
+            \draw [->] (iy_d) -- node[pos=0.2] {$\bar y^0$} (gamma);
+
+            \draw [->] (gamma) -- (sum_e);
+            \draw [->] (sum_e) -- node[node, name=s2, pos=.5] {} node[swap]{$-s$} (sgn);
+            \draw [->] (s2) |- (g);
+            \draw [->] (sgn) -- (q);
+            \draw [->] (g) -- (r);
+            \draw [->] (q) -- (sum_u);
+            \draw [->] (r) -| (sum_u);
+            \draw [->] (sum_u) -- node[node, name=u] {} node {$u$} (system);
+
+            \draw [->] (alpha) -- node[pos=0.7] {$-$} (sum_u);
+
+            %\draw [->] (system)[yshift=-.3cm] -| node[pos=0.6] {$x$} (xalpha) |- (beta);
+            \draw [->] (x) -- (alpha);
+
+            \draw [->] (beta) -| node[pos=0.9] {$-$} (sum_e);
+
+            \draw [->] (system.east |- oy) -- node[node, name=y] {} node [pos=0.7] {$y$} (oy);
+
+            \draw [->] (y) |- (observer);
+
+            \draw [->] (observer) -- node [pos=0.3] {$\xs$} (beta);
+
+            \draw [->] (u) -- ++(0,-0.5) -- (observer.north);
+        \end{tikzpicture}
+    }
+    \caption{System with state not accessible}
+    \label{fig:vsc-control-nostate}
+\end{figure}
