@@ -387,3 +387,65 @@ where $\lambda_0$ is the the real part of the slowest pole of the error dynamics
     \caption{System with state not accessible}
     \label{fig:vsc-control-nostate}
 \end{figure}
+
+\subsection{Avoid high frequency switching of the control input}
+
+Introducing a $\sgn$ function implemented exploiting a hysteresis cycle avoids the \textbf{infinite switching problem} of the control variable, but the \textbf{high frequency switching} of it still.
+
+\begin{nb}the $\sgn$ also implemented with hysteresis cycle has a output like a square wave, such that the gotten control variable value is composed also by high frequency components\end{nb}
+
+A possible solution to avoid this issue could be to introduce an additional state to the system in order to filtrate the control variable value like an integration on it
+
+\[
+    u = \frac{1}{s} v
+\]
+
+\begin{figure}[htb]
+    \centering
+    \resizebox{\textwidth}{!}{
+        \begin{tikzpicture}
+            \node [input] (iy_d) {};
+
+            \node [block, right=0.6cm of iy_d] (gamma) {$\gamma$};
+            \node [sum, right=.6cm of gamma] (sum_e) {};
+            \node [block, right=1cm of sum_e] (sgn) {$\sgn(\cdot)$};
+            \node [block, above=1cm of sgn] (g) {$g(\cdot)$};
+            \node [block, right=0.6cm of sgn] (q) {$q$};
+            \node [block, above=1cm of q] (r) {$r$};
+
+            \node [block, below=2cm of sgn] (beta) {$\tilde{\vect \beta}^\trans$};
+
+            \node [sum, right=0.6cm of q] (sum_u) {};
+            \node [integrator, right=0.6cm of sum_u] (int) {};
+            \node [block, right=0.6cm of int] (system) {$G(s)$};
+            \node [block, below=.8cm of system] (alpha) {$\tilde{\vect \beta}^\trans \tilde A$};
+
+            \node [output, right=1cm of system, yshift=0.3cm] (oy) {};
+
+            \node [node, right=.5 of alpha] (xalpha) {};
+
+            \draw [->] (iy_d) -- node[pos=0.2] {$\bar y^0$} (gamma);
+
+            \draw [->] (gamma) -- (sum_e);
+            \draw [->] (sum_e) -- node[node, name=s2, pos=.5] {} node[swap]{$-s$} (sgn);
+            \draw [->] (s2) |- (g);
+            \draw [->] (sgn) -- (q);
+            \draw [->] (g) -- (r);
+            \draw [->] (q) -- (sum_u);
+            \draw [->] (r) -| (sum_u);
+            \draw [->] (sum_u) -- node {$v$} (int);
+            \draw [->] (int) -- node {$u$} (system);
+
+            \draw [->] (alpha) -| node[pos=0.9] {$-$} (sum_u);
+
+            \draw [->] (system)[yshift=-.3cm] -| node[pos=0.6] {$x$} (xalpha) |- (beta);
+            \draw [->] (xalpha) -- (alpha);
+
+            \draw [->] (beta) -| node[pos=0.9] {$-$} (sum_e);
+
+            \draw [->] (system.east |- oy) -- node [pos=0.7] {$y$} (oy);
+        \end{tikzpicture}
+    }
+    \caption{Designed controller with integrator on control law}
+    \label{fig:vsc-control-int}
+\end{figure}
