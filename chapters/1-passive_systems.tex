@@ -4,28 +4,28 @@
 
 \begin{gather*}
     \begin{cases}
-        \dx (t) = f(x,u) \\
-        y(t) = g(x,u)
+        \dx (t) = f(\x,u) \\
+        y(t) = g(\x,u)
     \end{cases} \\
-    f(0,0)=0, \; g(0,0)=0
+    f(\vect 0,0) = \vect 0, \quad g(\vect 0,0)=0
 \end{gather*}
 
-A dynamical system is called \textbf{passive} if there exists a \textbf{Lyapunov function} $\V(x)$ called \textbf{storage function}, such that
+A dynamical system is called \textbf{passive} if there exists a \textbf{Lyapunov function} $\V(\x)$ called \textbf{storage function}, such that
 
 \[
-    uy \geq \pd{V}{x}(x) f(x,u) + \epsilon u^2 + \delta y^2 + \rho \psi(x)
+    uy \geq \pd{V}{\x}(\x) f(\x,u) + \epsilon u^2 + \delta y^2 + \rho \psi(\x)
 \]
 
 with
 
 \[
-    \epsilon \geq 0, \delta \geq 0, \rho \geq 0, \psi(x) > 0
+    \epsilon \geq 0, \delta \geq 0, \rho \geq 0, \psi(\x) > 0
 \]
 
 Notice that the Lyapunov function can be written as
 
 \[
-     \pd{\V}{x} f(x,0) = \dV(x)
+     \pd{\V}{\x} f(\x,0) = \dV(\x)
 \]
 
 \subsection{Conservative system}
@@ -33,7 +33,7 @@ Notice that the Lyapunov function can be written as
 A passive system is called \textbf{conservative} if $\epsilon = \delta = \rho = 0$, such that
 
 \[
-    uy = \pd{V}{x}(x) f(x,u)
+    uy = \pd{V}{\x}(\x) f(\x,u)
 \]
 
 \subsection{Strictly passive}
@@ -47,22 +47,29 @@ Strictly passive w.r.t the state if $\rho > 0$
 
 \subsection{Zero-state observable}
 
-A system is \textbf{zero-state observable} if $x(\cdot) = 0$ is the only \textbf{free evolution} (u=0) of the state compatible with identically zero output (y=0)
+A system is \textbf{zero-state observable} if $\x(t) = 0$ is the only \textbf{free evolution} (u=0) of the state compatible with identically zero output (y=0)
 
 \section{Properties}
 
 \begin{theorem}
-    If a system is \textbf{passive} with positive definite storage function, then $x=0$ is a \textbf{stable} equilibrium for the system with zero input
+    If a system is \textbf{passive} with positive definite storage function, then $\x=0$ is a \textbf{stable} equilibrium for the system with zero input
 \end{theorem}
 
 \begin{theorem}
-    If a system is \textbf{strictly passive w.r.t the state} with positive definite storage function, then $x=0$ is an \textbf{asymptotically stable} equilibrium for the system with zero input
+    If a system is \textbf{strictly passive w.r.t the state} with positive definite storage function, then $\x=0$ is an \textbf{asymptotically stable} equilibrium for the system with zero input
 \end{theorem}
 
 \begin{theorem}
-    If a system is \textbf{strictly passive w.r.t the output} and \textbf{zero-stable observable} with positive definite storage function, then $x=0$ is an \textbf{asymptotically stable} equilibrium for the system with zero input
+    If a system is \textbf{strictly passive w.r.t the output} and \textbf{zero-stable observable} with positive definite storage function, then $\x=0$ is an \textbf{asymptotically stable} equilibrium for the system with zero input
 \end{theorem}
 
 \begin{theorem}
     If the storage function associated to \textbf{asymptotically stable} equilibrium is radially unbounded then the equilibrium is \textbf{GAS}
+\end{theorem}
+
+\begin{theorem}
+    If a system is \textbf{zero state observable} and \textbf{passive} with positive definite storage function and \textbf{radially unbounded}, then $\x=0$ is a \textbf{GAS equilibrium} of the output feedback system with control law
+    \[
+        u=-\phi(y),\qquad \phi(0)=0, \quad y\phi(y)>0, \forall y \neq 0
+    \]
 \end{theorem}
