@@ -43,22 +43,9 @@ design a static state feedback control law $u = k(\x,v)$ such that the associate
     the feedback system seen from outside seems linear, and a controller for linear system can be made using the input $v$ and the output $y$.
 \end{example}
 
-
-
-\section{Conditions}
-
-\begin{theorem}
-    A \texbf{full feedback linearization} of a nonlinear system is possible if and only if a regular function $c(\cdot)$ can be found such that system
-    \[
-        \begin{cases}
-            \dx = \vect a(\x) + \vect b(\x) u \\
-            y = \vect c(\x)
-        \end{cases}
-    \]
-    has a \textbf{relative degree} $r$ equal to the order $n$ of the linear system.
-\end{theorem}
-
 \subsection{Relative degree}
+
+Before to go on, let us introduce the concept of \textbf{relative degree} of a system.
 
 Given a system with output $y=\vect c(\x)$ its relative degree is defined as the minimum amount time derivation of $y$ such that it is directly dependent by input $u$.
 
@@ -66,39 +53,62 @@ Given a system with output $y=\vect c(\x)$ its relative degree is defined as the
     r = \min \left\{ \gamma : \pd{y^{(\gamma)}}{u} \neq 0 \right\}
 \]
 
-The concept of relative degree can be formulated also exploiting the \textbf{Lie derivative}\footnote{Defined as $\mathcal{L}_f h(\x) = \pd{h}{\x} f(\x) = \sum_{i=1}^{n} f_i(\x) \pd{h(\x)}{x_i}$}
+The concept of relative degree can be formulated also exploiting the \textbf{Lie derivative}\footnote{Defined as $\Lief h(\x) = \pd{h}{\x} f(\x) = \sum_{i=1}^{n} f_i(\x) \pd{h(\x)}{x_i}$}
 
 \[
     \dot y =
     %\frac{d}{dt} \vect c(\x) =
     \pd{\vect c}{\x} \dx =
     \pd{\vect c}{\x} \left(\vect a(\x) + \vect b(\x) u\right) =
-    \mathcal{L}_{\vect a} \vect c(\x) + u \mathcal{L}_{\vect b} \vect c(\x)
+    \Lie{\vect a} \vect c(\x) + u \Lie{\vect b} \vect c(\x)
 \]
 
-if $\mathcal{L}_{\vect b} \vect c(\x) \neq 0$ so the relative degree of the system is equal to $1$ else it is greater than $1$ or not well-defined;
+if $\Lie{\vect b} \vect c(\x) \neq 0$ so the relative degree of the system is equal to $1$ else it is greater than $1$ or not well-defined;
 in this case we can iterate the derivation of the output in order to find the relative degree.
 
-Since $\mathcal{L}_{\vect b} \vect c(\x) = 0$ then $\dot y = \mathcal{L}_{\vect a} \vect c(\x)$ and
+Since $\Lie{\vect b} \vect c(\x) = 0$ then $\dot y = \Lie{\vect a} \vect c(\x)$ and
 
 \[
     \ddot y =
-    %\frac{d}{dt} \left( \mathcal{L}_{\vect a} \vect c(\x) \right) =
-    \pd{\left( \mathcal{L}_{\vect a} \vect c(\x) \right)}{x} \dx =
-    \pd{\left( \mathcal{L}_{\vect a} \vect c(\x) \right)}{x} \left(\vect a(\x) + \vect b(\x) u\right) =
-    \mathcal{L}_{\vect a}^2 \vect c(\x) + u \mathcal{L}_{\vect b} \mathcal{L}_{\vect a} \vect c(\x)
+    %\frac{d}{dt} \left( \Lie{\vect a} \vect c(\x) \right) =
+    \pd{\left( \Lie{\vect a} \vect c(\x) \right)}{x} \dx =
+    \pd{\left( \Lie{\vect a} \vect c(\x) \right)}{x} \left(\vect a(\x) + \vect b(\x) u\right) =
+    \Lie{\vect a}^2 \vect c(\x) + u \Lie{\vect b} \Lie{\vect a} \vect c(\x)
 \]
 
-now if $\mathcal{L}_{\vect b} \mathcal{L}_{\vect a} \vect c(\x) \neq 0$ then the relative degree is $2$ else we can go on with the iterations.
+now if $\Lie{\vect b} \Lie{\vect a} \vect c(\x) \neq 0$ then the relative degree is $2$ else we can go on with the iterations.
 
 The procedure can be generalized
 
 \[
-    y^{(k)} = \mathcal{L}_{\vect a}^k \vect c(\x) + u \mathcal{L}_{\vect b} \mathcal{L}_{\vect a}^{k-1} \vect c(\x) \qquad \Longleftarrow \mathcal{L}_{\vect b} \mathcal{L}_{\vect a}^{h-1} \vect c(\x) = 0, h < k
+    y^{(k)} = \Lie{\vect a}^k \vect c(\x) + u \Lie{\vect b} \Lie{\vect a}^{k-1} \vect c(\x) \qquad \Longleftarrow \Lie{\vect b} \Lie{\vect a}^{h-1} \vect c(\x) = 0, h < k
 \]
 
 so the relative degree can be defined as
 
 \[
-    r = \min \left\{ \gamma : \mathcal{L}_{\vect b} \mathcal{L}_{\vect a}^{\gamma-1} \vect c(\x) \neq 0 \right\}
+    r = \min \left\{ \gamma : \Lie{\vect b} \Lie{\vect a}^{\gamma-1} \vect c(\x) \neq 0 \right\}
 \]
+
+\section{Fully feedback linearize}
+
+\begin{theorem}\label{thm:full-feedback-linearization}
+A \texbf{full feedback linearization} of a nonlinear system is possible if and only if a regular function $c(\cdot)$ can be found such that system
+\[
+    \begin{cases}
+        \dx = \vect a(\x) + \vect b(\x) u \\
+        y = \vect c(\x)
+    \end{cases}
+\]
+has a \textbf{relative degree} $r$ equal to the order $n$ of the linear system.
+\end{theorem}
+
+\subsection{Control law}
+
+A system that satisfies the \cref{thm:full-feedback-linearization} (its \textbf{relative degree} $r$ is equal to its \textbf{degree} $n$) can be linearized with the control law
+
+\[
+    u = \frac{1}{\Lie{\vect b} \Lie{\vect a}^{n-1} \vect c(\x)} \left( v - \Lie{\vect a}^{n} \vect c(\x) \right)
+\]
+
+where $v$ is the new control input of the linearized system.
