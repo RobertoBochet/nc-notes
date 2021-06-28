@@ -53,7 +53,7 @@ Given a system with output $y=\vect c(\x)$ its relative degree is defined as the
     r = \min \left\{ \gamma : \pd{y^{(\gamma)}}{u} \neq 0 \right\}
 \]
 
-The concept of relative degree can be formulated also exploiting the \textbf{Lie derivative}\footnote{Defined as $\Lief h(\x) = \pd{h}{\x} f(\x) = \sum_{i=1}^{n} f_i(\x) \pd{h(\x)}{x_i}$}
+The concept of relative degree can be formulated also exploiting the \textbf{Lie derivative}\footnote{Defined as $\Lie{f} h(\x) = \pd{h}{\x} f(\x) = \sum_{i=1}^{n} f_i(\x) \pd{h(\x)}{x_i}$}
 
 \[
     \dot y =
@@ -93,7 +93,7 @@ so the relative degree can be defined as
 \section{Fully feedback linearize}
 
 \begin{theorem}\label{thm:full-feedback-linearization}
-A \texbf{full feedback linearization} of a nonlinear system is possible if and only if a regular function $c(\cdot)$ can be found such that system
+A \textbf{full feedback linearization} of a nonlinear system is possible if and only if a regular function $c(\cdot)$ can be found such that system
 \[
     \begin{cases}
         \dx = \vect a(\x) + \vect b(\x) u \\
