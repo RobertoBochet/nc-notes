@@ -1,4 +1,4 @@
-\chapter{Feedback linearization}
+\usepackage{amsmath}\chapter{Feedback linearization}
 
 \section{Definition}
 
@@ -80,9 +80,9 @@ now if $\Lie{\vect b} \Lie{\vect a} \vect c(\x) \neq 0$ then the relative degree
 
 The procedure can be generalized
 
-\[
+\begin{equation}\label{eqn:output-via-lie}
     y^{(k)} = \Lie{\vect a}^k \vect c(\x) + u \Lie{\vect b} \Lie{\vect a}^{k-1} \vect c(\x) \qquad \Longleftarrow \Lie{\vect b} \Lie{\vect a}^{h-1} \vect c(\x) = 0, h < k
-\]
+\end{equation}
 
 so the relative degree can be defined as
 
@@ -90,10 +90,112 @@ so the relative degree can be defined as
     r = \min \left\{ \gamma : \Lie{\vect b} \Lie{\vect a}^{\gamma-1} \vect c(\x) \neq 0 \right\}
 \]
 
-\section{Fully feedback linearize}
+\subsection{Normal canonical form}
+
+Given a nonlinear, affine, time-invariant, SISO system that can be rewritten in the \textbf{normal canonical form}, in particular a system of degree $n$ and relative degree $r$ with input $u$ and state $\x$ can be rewritten in the form
+
+\[
+    \begin{cases}
+        \dot{\tilde x}_1 = \tilde x_2 \\
+        \dot{\tilde x}_2 = \tilde x_3 \\
+        \vdots \\
+        \dot{\tilde x}_r = \tilde\lambda(\vect{\tilde x}) + \tilde\mu (\vect{\tilde x}) u \\
+        \left.\begin{matrix}\dot{\tilde x}_{r+1} = \tilde\eta_1(\vect{\tilde x}) \\
+        \vdots \\
+        \dot{\tilde x}_{n} = \tilde\eta_{n-r}(\vect{\tilde x}) \\
+        \end{matrix} \qquad \right. \\
+        y = \tilde x_1
+    \end{cases}
+\]
+
+where the state $\vect{\tilde x}$ is a transformation of the state $\x$ of the original system under the transformation $\vect{\tilde x} = \varphi(\vect x)$.
+
+\subsubsection{Linearization of normal canonical form}
+
+If we impose
+
+\[
+    u = \frac{1}{\tilde\mu (\vect{\tilde x})} \left( v - \tilde\lambda(\vect{\tilde x}) \right)
+\]
+
+we get a linear I/O map
+
+\[
+    \begin{cases}
+        \dot{\tilde x}_1 = \tilde x_2 \\
+        \dot{\tilde x}_2 = \tilde x_3 \\
+        \vdots \\
+        \dot{\tilde x}_r = v \\
+        \left.\begin{matrix}\dot{\tilde x}_{r+1} = \tilde\eta_1(\vect{\tilde x}) \\
+        \vdots \\
+        \dot{\tilde x}_{n} = \tilde\eta_{n-r}(\vect{\tilde x}) \\
+        \end{matrix} \qquad \right\} \text{zero dynamics} \\
+        y = \tilde x_1
+    \end{cases}
+\]
+
+\begin{nb}if $r=n$ the "zero dynamics" part disappears, and we get a fully linearized system\end{nb}
+
+\section{Linearization}
+
+So the goal given a generic nonlinear, affine, time-invariant, SISO system is to define a transformation $\vect{\tilde x} = \varphi(\vect x)$ which defines an equivalent system in the \textbf{normal canonical form}.
+
+From the definition of the \textbf{relative degree}(\cref{eqn:output-via-lie}) we have
+
+\[
+    y^{(k-1)}=\Lie{a}^{k-1} c(\x),\qquad k = 1,2,\dots, r-1
+\]
+
+so we can impose $\tilde x_k =\varphi_k(\x) = \Lie{a}^{k-1} c(\x)$, then
+
+\begin{multline*}
+    \dot{\tilde x}_k =
+    \pd{\varphi_k}{\x} \dx =
+    \pd{\left( \Lie{a}^{k-1} c(\x) \right)}{\x} \left( a(\x) + b(\x) u \right) \\ =
+    \Lie{a}^k c(\x) + \cancelto{0}{u \Lie{b}\Lie{a}^{k-1} c(\x)} =
+    \Lie{a}^k c(\x) =
+    \varphi_{k+1}(\x) =
+    \tilde x_{k+1}
+\end{multline*}
+
+so
+\[
+    \dot{\tilde x}_k = \tilde x_{k+1},\qquad k = 1,2,\dots, r-1
+\]
+
+instead the differential of $\dot{\tilde x}_r$ can be written as
+
+\begin{equation}\label{eqn:newx-r}
+    \dot{\tilde x}_r = \Lie{a}^r c(\x) + u \Lie{b}\Lie{a}^{r-1} c(\x)
+\end{equation}
+
+\begin{nb}the transformation $\tilde x_k =\varphi_k(\x)$ imposes $y̛^{(k-1)} = \tilde x_k,\quad k = 1,2,\dots,r$\end{nb}
+
+\begin{theorem}[input-output state feedback linearization]
+If a nonlinear, affine, time-invariant, SISO system has \textbf{relative degree} $r$ then, one can get a linear I/O map via state feedback with the control law
+    \[
+        u = \frac{1}{\Lie{\vect b} \Lie{\vect a}^{r-1} \vect c(\x)} \left( v - \Lie{\vect a}^{r} \vect c(\x) \right)
+    \]
+\end{theorem}
+
+\begin{proof}
+    Using \cref{eqn:newx-r} we can define the equation for the control law as
+
+    \[
+        v = \Lie{\vect a}^{r} \vect c(\x) + u \Lie{\vect b} \Lie{\vect a}^{r-1} \vect c(\x)
+    \]
+
+    and if we merge the two equations we get
+
+    \[
+        \dot{\tilde x}_r = v \quad \implies \quad y^{(r)} = v
+    \]
+\end{proof}
+
+\subsection{Full feedback linearization}
 
 \begin{theorem}\label{thm:full-feedback-linearization}
-A \textbf{full feedback linearization} of a nonlinear system is possible if and only if a regular function $c(\cdot)$ can be found such that system
+A \textbf{full feedback linearization} of a nonlinear, affine, time-invariant, SISO system is possible if and only if a regular function $c(\cdot)$ can be found such that system
 \[
     \begin{cases}
         \dx = \vect a(\x) + \vect b(\x) u \\
@@ -103,12 +205,24 @@ A \textbf{full feedback linearization} of a nonlinear system is possible if and 
 has a \textbf{relative degree} $r$ equal to the order $n$ of the linear system.
 \end{theorem}
 
-\subsection{Control law}
-
-A system that satisfies the \cref{thm:full-feedback-linearization} (its \textbf{relative degree} $r$ is equal to its \textbf{degree} $n$) can be linearized with the control law
+so we get the linearized system
 
 \[
-    u = \frac{1}{\Lie{\vect b} \Lie{\vect a}^{n-1} \vect c(\x)} \left( v - \Lie{\vect a}^{n} \vect c(\x) \right)
+    \begin{cases}
+        \dxe = \tilde A \xe + \tilde B v \\
+        y = \tilde C \xe
+    \end{cases} \quad
+    \tilde A = \begin{bmatrix}
+            0 & 1 & 0 & \dots & 0 \\
+            0 & 0 & 1 & \dots & 0 \\
+            \dots & \dots & \dots & \dots & \dots \\
+            0 & 0 & 0 & \dots & 1 \\
+            0 & 0 & 0 & \dots & 0 \\
+    \end{bmatrix},
+    \tilde B = \begin{bmatrix}
+                   0 \\ 0 \\ \dots \\ 0 \\ 1
+    \end{bmatrix},
+    \tilde C = \begin{bmatrix}
+                   1 \\ 0 \\ \dots \\ 0 \\ 0
+    \end{bmatrix}^{\trans}
 \]
-
-where $v$ is the new control input of the linearized system.
