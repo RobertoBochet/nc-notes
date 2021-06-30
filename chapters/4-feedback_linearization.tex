@@ -1,4 +1,4 @@
-\usepackage{amsmath}\chapter{Feedback linearization}
+\usepackage{amsmath}\usepackage{amsmath}\chapter{Feedback linearization}
 
 \section{Definition}
 
@@ -220,9 +220,44 @@ so we get the linearized system
             0 & 0 & 0 & \dots & 0 \\
     \end{bmatrix},
     \tilde B = \begin{bmatrix}
-                   0 \\ 0 \\ \dots \\ 0 \\ 1
+                   0 \\ 0 \\ \vdots \\ 0 \\ 1
     \end{bmatrix},
     \tilde C = \begin{bmatrix}
-                   1 \\ 0 \\ \dots \\ 0 \\ 0
+                   1 \\ 0 \\ \vdots \\ 0 \\ 0
     \end{bmatrix}^{\trans}
+\]
+
+\subsection{Pole assignment}
+
+After the linearization we can impose the dynamics of the system with the method designed for linear systems like \textbf{pole assignment}.
+
+If we choose $v = - K \xe + w$ the system becomes
+
+\[
+    \begin{cases}
+        \dxe = (\tilde A - \tilde B K) \xe + \tilde B w \\
+        y = \tilde C \xe
+    \end{cases}
+\]
+
+then the dynamics of the system is assigned by the eigenvalues of $(\tilde A - \tilde B K)$.
+
+\begin{gather*}
+    K = \begin{bmatrix}
+    k_n \\ k_{n-1} \\ k_{n-2} \\ \vdots \\ k_1
+    \end{bmatrix}^{\trans}
+    \quad \implies \quad
+    \tilde A - \tilde B K = \begin{bmatrix}
+        0 & 1 & 0 & \dots & 0 \\
+        0 & 0 & 1 & \dots & 0 \\
+        \dots & \dots & \dots & \dots & \dots \\
+        0 & 0 & 0 & \dots & 1 \\
+        -k_n & -k_{n-1} & -k_{n-2} & \dots & -k_1 \\
+    \end{bmatrix}
+\end{gather*}
+
+which eigenvalues are the roots of the characteristic polynomial
+
+\[
+    \chi(s) = s^n + k_1 s^{n-1} + k_2 s^{n-2} + k_3 s^{n-3} + \dots + k_{n-1} s + k_n
 \]
