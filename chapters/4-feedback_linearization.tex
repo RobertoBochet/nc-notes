@@ -1,4 +1,4 @@
-\chapter{Feedback linearization}
+\usepackage{amsmath}\chapter{Feedback linearization}
 
 \section{Definition}
 
@@ -13,7 +13,7 @@ Given a nonlinear system in the form
 
 design a static state feedback control law $u = k(\x,v)$ such that the associated feedback system is linear.
 
-\begin{nb} the system is linear w.r.t. input \end{nb}
+\begin{nb}the system is linear w.r.t. input\end{nb}
 
 \begin{example}
     Model of a centrifuge
@@ -226,6 +226,31 @@ so we get the linearized system
                    1 \\ 0 \\ \vdots \\ 0 \\ 0
     \end{bmatrix}^{\trans}
 \]
+
+\subsubsection{Existence of $c(\cdot)$}
+
+In order to satisfy the \cref{thm:full-feedback-linearization} is useful to have a theorem to check if $c(\cdot)$ exists.
+
+\begin{theorem}
+    A function $c(\cdot)$ that satisfies the \cref{thm:full-feedback-linearization} exists if and only if there exists an open set $D, \x^0 \in D$, such that the following conditions hold:
+
+    \begin{itemize}
+        \item The vectors in the set $\{\vect b(\x), \ad{\vect a}^1 \vect b(\x), \dots, \ad{\vect a}^{n-1} \vect b(\x) \}$\footnote{this is another common way to indicate the \textbf{Lie bracket} such that $\ad{\vect a}^{1}\vect b(\x) = \Lieb{\vect a}{\vect b} = \Lie{\vect a}\vect b(\x) - \Lie{\vect b}\vect a(\x) = \pd{\vect b}{\x}\vect a(\x) - \pd{\vect a}{\x}\vect b(\x)$ and $\ad{\vect a}^{i}\vect b(\x) = \Lieb{\vect a}{\ad{\vect a}^{i-1}\vect b}$} are linearly independent for all $x \in D$
+        \item The set of the vector fields $\{\vect b(\x), \ad{\vect a}^1 \vect b(\x), \dots, \ad{\vect a}^{n-2} \vect b(\x) \}$ is involutive in $D$
+    \end{itemize}
+\end{theorem}
+
+\begin{definition}[Involutive]
+Let $\vect f_i : D \to \Real^n$ with $D \subseteq \Real^n$ be a \textbf{regular vector field}, $i= 1,2,\dots, m$.
+    The set $\{\vect f_1, \vect f_2, \dots, \vect f_m\}$, is involutive if
+    \begin{multline*}
+        \rank \begin{bmatrix} \vect f_1(\x) & \vect f_2(\x) & \dots & \vect f_m(\x) \end{bmatrix} = \\
+        \rank \begin{bmatrix} \vect f_1(\x) & \vect f_2(\x) & \dots & \vect f_m(\x) & \Lieb{\vect f_i(\x)}{\vect f_j(\x)} \end{bmatrix}, \\
+        \quad \forall \x \in D, \quad i,j \in \{1,2,\dots, m\}
+    \end{multline*}
+\end{definition}
+
+\begin{nb}if all the vectors $\vect f_i(\x)$ are constant(independent of $\x$) the set of the second condition  is automatically \textbf{involutive} because $\Lieb{\vect f_i(\x)}{\vect f_j(\x)} = 0$\end{nb}
 
 \subsection{Pole assignment}
 
