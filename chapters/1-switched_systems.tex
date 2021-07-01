@@ -101,4 +101,34 @@ A switched system can have a family systems of linear ones such that
 	If a switched system with a family systems of linear ones has $A_q, \forall q \in Q = \{1,2,\dots,m\}$ \textbf{Hurwitz} and \textbf{triangular} then, the equilibrium $\x=\vect 0$ of the switched system is \textbf{GUAS}.
 \end{theorem}
 
-%\subsection{Stability for slow switching}
+\subsection{Stability for slow switching}
+
+\begin{theorem}
+	Given a switched system with a family systems of linear ones where $A_q, \forall q \in Q = \{1,2,\dots,m\}$ is \textbf{Hurwitz} then exists a \textbf{dwell time} $\tau_D \leq t_{q,i}$, (where $t_{q,i}$ is the duration of the i-th signal $q$ given by $\sigma(\cdot)$) such that the equilibrium $\x=\vect 0$ of the switched system is \textbf{GAS}.
+\end{theorem}
+
+\subsection{Stability under state-dependent switching}
+
+\begin{definition}[state-dependent common Lyapunov function]
+	A switched systems has a \textbf{state-dependent common Lyapunov function} at $\x=\vect 0$ if there exists a $C^1$ function $V: \Real^n \to \Real$ is such that $V(\x) > 0, \forall \x \neq \vect 0, V(\vect 0) = 0$
+	\[
+		\pd{V}{\x}(\x) f_{\sigma(\x)}(\x) < 0, \forall \x \in \Real^n
+	\]
+	where $\sigma : X \to Q$
+\end{definition}
+
+\begin{theorem}
+	Given a switched systems it there exists a \textbf{radially unbounded state-dependent common Lyapunov function} then, the equilibrium $\x=\vect 0$ of the switched system is \textbf{GAS}.
+\end{theorem}
+
+\begin{nb}this condition is less stringent than requiring a \textbf{shared radially unbounded common Lyapunov function}\end{nb}
+
+\subsubsection{Stability under state-dependent switching for linear systems}
+
+\begin{theorem}
+	Given a switched system with a family systems of linear ones where $A_q, \forall q \in Q = \{1,2,\dots,m\}$ not necessarily \textbf{Hurwitz} if there exists a
+	\[
+		A = \sum_{i=1}^m \alpha_i A_i, \qquad \alpha_i \geq 0, \sum_{i=1}^m \alpha_i =1
+	\]
+	such than $A$ is \textbf{Hurwitz} then there exists a \textbf{state-dependent switching strategy} such that the equilibrium $\x=\vect 0$ of the switching system is \textbf{GAS}.
+\end{theorem}
