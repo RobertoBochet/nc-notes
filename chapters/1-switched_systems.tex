@@ -1,0 +1,104 @@
+\chapter{Switched systems}
+
+\section{Definition}
+
+A switched system is a system whom the state dynamics is described by a set of \textbf{more than one} vector fields;
+at specific moment the state dynamics is controlled by only one of these vector fields.
+The switching between these dynamics can be controlled by exogenous variable (\textbf{time-dependent switching}) or defined in function of the state (\textbf{state-dependent switching}).
+
+The system is defined by
+
+\[
+	\begin{cases}
+		\dx = \vect f_q(\x), \qquad q \in Q = \{1,2,\dots,m\} \\
+		\sigma(\cdot): U \to Q
+	\end{cases}
+\]
+
+a family of $m$ systems characterized by their vector fields $\vect f_q(\x)$ and a function $\sigma(\cdot)$ which determines the current one is in use.
+
+\begin{figure}[htb]
+	\centering
+	\resizebox{0.7\textwidth}{!}{
+		\begin{tikzpicture}
+			\node [node] (switch) {};
+
+			\node [node, above left=1 and 1 of switch] (switch_1) {};
+			\node [block, left=1 of switch_1] (f_1) {$\vect f_1(\x)$};
+			\draw (f_1) -- (switch_1);
+
+			\node [node, below left=1 and 1 of switch] (switch_m) {};
+			\node [block, left=1 of switch_m] (f_m) {$\vect f_m(\x)$};
+			\draw (f_m) -- (switch_m);
+
+			\node [node,left=0.5 of f_m] (x_f_m) {};
+			\draw [->] (x_f_m) -- (f_m);
+
+			\draw [shorten <=5] (switch_1) -- (switch);
+
+			\draw [->, bend right, looseness=1, shorten <=5, shorten >=5] (switch_1) to node{$\sigma$} (switch_m);
+
+			\node [integrator, right=1 of switch] (int) {};
+
+			\node [output, right=1 of int] (ox) {};
+
+			\draw [->] (switch) -- node {$\dx$} (int);
+			\draw [->] (int) -- node [pos=0.8] {$x$} node [node, name=x, pos=0.5] {} (ox);
+
+			\draw [->] (x) -- ++(0,-2) -| (x_f_m) |- (f_1);
+
+			\draw [draw=none] (f_1) to node[node, pos=0.25] {} node[node, pos=0.5] {} node[node, pos=0.75] {} (f_m);
+		\end{tikzpicture}
+	}
+	\caption{Switched system}
+\end{figure}
+
+\section{Equilibrium}
+
+\begin{theorem}
+	If a switched system defined by
+	\[
+		\dx = \vect f_q(\x), \qquad q \in Q = \{1,2,\dots,m\}
+	\]
+	has $\vect f_q(\vect 0) = \vect 0, \forall q \in Q$ then $\x = \vect 0$ is an equilibrium of the switched system.
+\end{theorem}
+
+\begin{nb}the stability of an equilibrium of the $m$ systems of the family tells us nothing about the stability of switched system\end{nb}
+
+\section{Stability}
+
+\subsection{Stability for arbitrary switching}
+
+\begin{definition}[globally uniformly asymptotically stable equilibrium]
+	The equilibrium $\x=\vect 0$ is \textbf{GUAS} if it is \textbf{GAS}, uniformly w.r.t. the switching signals $\sigma$
+\end{definition}
+
+\begin{theorem}
+	If the family of systems share a \textbf{radially unbounded common Lyapunov function} then the equilibrium $\x=\vect 0$ of the switched system is \textbf{GUAS}.
+\end{theorem}
+
+\subsubsection{Linear system}
+
+A switched system can have a family systems of linear ones such that
+
+\[
+	\dx = A_q \x, \qquad q \in Q = \{1,2,\dots,m\}
+\]
+
+\begin{theorem}
+	If for a switched system with a family systems of linear ones exists a matrix $P = P^\trans > 0$ such that
+	\[
+		PA_q + A_q^\trans P < 0, \qquad \forall q \in Q = \{1,2,\dots,m\}
+	\]
+	then, the equilibrium $\x=\vect 0$ of the switched system is \textbf{GUAS}.
+\end{theorem}
+
+\begin{theorem}
+	If a switched system with a family systems of linear ones has $A_q, \forall q \in Q = \{1,2,\dots,m\}$ \textbf{Hurwitz}\footnote{All of its eigenvalues have negative real part} and \textbf{commutative}\footnote{$A_i A_j = A_j A_i, \forall i,j \in Q = \{1,2,\dots,m\}$} then, the equilibrium $\x=\vect 0$ of the switched system is \textbf{GUAS}.
+\end{theorem}
+
+\begin{theorem}
+	If a switched system with a family systems of linear ones has $A_q, \forall q \in Q = \{1,2,\dots,m\}$ \textbf{Hurwitz} and \textbf{triangular} then, the equilibrium $\x=\vect 0$ of the switched system is \textbf{GUAS}.
+\end{theorem}
+
+%\subsection{Stability for slow switching}
