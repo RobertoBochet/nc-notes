@@ -11,4 +11,5 @@
 *.run.xml
 *.synctex.gz
 *.synctex(busy)
-*toc
+*.toc
+*.pdf
