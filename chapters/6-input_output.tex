@@ -1,0 +1,129 @@
+\usepackage{amsmath}\chapter{Input output approach}
+
+\section{Definition}
+
+\begin{definition}[weakly bounded operator]
+	A causal operator $H : \Lebesgueext \to \Lebesgueext$ is weakly bounded (or with finite gain) if
+	\[
+		\exists \hat\gamma, \hat\beta \in \Realp : \norm{H(u(\cdot))} \leq \hat\gamma \norm{u(\cdot)} + \hat\beta, \, \forall u(\cdot) \in \Lebesgue
+	\]
+\end{definition}
+
+\begin{definition}[gain of a weakly bounded operator]
+	Let $H : \Lebesgueext \to \Lebesgueext$ be a causal weakly bounded operator.
+	The gain of $H$ is defined as
+	\[
+		\gamma(H) = \inf\{\hat\gamma \in \Realp : \norm{H(u(\cdot))} \leq \hat\gamma \norm{u(\cdot)} + \hat\beta, \, \forall u(\cdot) \in \Lebesgue, \exists \hat\beta \in \Realp\}
+	\]
+\end{definition}
+
+\begin{nb}a less important value that could appear is $\beta(H)$.
+This is intended as
+\[
+	\beta(H) = inf\{\hat\beta \in \Realp : \norm{H(u(\cdot))} \leq \gamma(H) \norm{u(\cdot)} + \hat\beta, \, \forall u(\cdot) \in \Lebesgue\}
+\]
+\end{nb}
+
+\section{Stability}
+
+\begin{definition}
+	A causal operator $H : \Lebesgueext \to \Lebesgueext$ is $\Lebesgue$-stable if $H(\Lebesgue) \subseteq \Lebesgue$, that is $H(u(\cdot)) \in \Lebesgue, \quad \forall u(\cdot) \in \Lebesgue$
+\end{definition}
+
+\begin{theorem}
+	A causal operator $H : \Lebesgueext \to \Lebesgueext$ is $\Lebesgue$-stable if and only if there exist
+	\begin{itemize}
+		\item a continuous increasing function $\sigma(\cdot): \Real^+ \to \Real^+$ with $\sigma(0) = 0$
+		\item a constant $\beta \in \Real^+$
+	\end{itemize}
+	such that $\norm{H(u(\cdot))} \leq \sigma(\norm{u(\cdot)}) + \beta, \quad \forall u(\cdot) \in \Lebesgue$
+\end{theorem}
+
+\begin{corollary}
+	A causal \textbf{weakly bounded} operator $H : \Lebesgueext \to \Lebesgueext$ is $\Lebesgue$-stable
+\end{corollary}
+
+\subsection{Feedback stability}
+
+\begin{figure}[htb]
+	\centering
+	\resizebox{.6\textwidth}{!}{
+		\begin{tikzpicture}
+			\node [block] (H1) {$H_1$};
+			\node [block, below=0.7 of H1] (H2) {$H_2$};
+
+			\node [sum, left=1 of H1] (sum1) {};
+			\node [input, left=1.5 of sum1] (u1) {};
+			\node [node, right=1.2 of H1] (y1) {};
+			\node [output, right=1.5 of y1] (oy1) {};
+
+			\node [sum] at (H2 -| y1) (sum2) {};
+			\node [input] at (H2 -| oy1) (u2) {};
+			\node [node] at (H2 -| sum1) (y2) {};
+			\node [output] at (H2 -| u1) (oy2) {};
+
+			\draw [->] (u1) -- node[pos=0.2] {$u_1$} (sum1);
+			\draw [->] (u2) -- node[pos=0.2] {$u_2$} (sum2);
+
+			\draw [->] (H1) -- node[pos=0.85] {$y_1$} (oy1);
+			\draw [->] (H2) -- node[pos=0.85] {$y_2$} (oy2);
+
+			\draw[->] (y1) -- (sum2);
+			\draw[->] (y2) -- node[pos=0.8] {$-$} (sum1);
+
+			\draw[->] (sum1) -- node {$z_1$} (H1);
+			\draw[->] (sum2) -- node {$z_2$} (H2);
+		\end{tikzpicture}
+	}
+	\caption{A feedback system of two causal operators}
+	\label{fig:io-feedback}
+\end{figure}
+
+\begin{definition}
+	The operator obtained by the feedback interconnection of two causal operators (\cref{fig:io-feedback}) is well-posed if the pair $(y_1,y_2)$ exists, and it is unique for any $(u_1,u_2) \in \Lebesgueext \times \Lebesgueext$
+\end{definition}
+
+\begin{theorem}[small gain theorem]\label{thm:io-small-gain}
+	Let $H$ be a well-posed causal operator obtained by connecting in feedback two causal and \textbf{weakly bounded} operators $H_1$ and $H_2$\textnote{still }.
+	If
+	\[
+		\lambda = \gamma(H_1)\gamma(H_2) < 1
+	\]
+	then, $H$ is \textbf{weakly bounded}, that is
+	\[
+		\norm{y_i(\cdot)} \leq \hat\gamma_{i,1} \norm{u_1(\cdot)} + \hat\gamma_{i,2} \norm{u_2(\cdot)} + \hat\beta_i, \quad \forall u_1(\cdot),u_2(\cdot) \in \Lebesgue,\, i = 1,2
+	\]
+	In particular
+	\begin{gather*}
+	    \hat\gamma_{1,1} \leq \frac{\gamma(H_1)}{1-\gamma(H_1)\gamma(H_2)}, \quad
+	    \hat\gamma_{1,2} \leq \frac{\gamma(H_1)\gamma(H_2)}{1-\gamma(H_1)\gamma(H_2)}, \quad
+		\hat\beta_1 \leq \gamma(H_1) \beta(H_1) + \beta(H_2) \\
+	    \hat\gamma_{2,1} \leq \frac{\gamma(H_1)\gamma(H_2)}{1-\gamma(H_1)\gamma(H_2)}, \quad
+	    \hat\gamma_{2,2} \leq \frac{\gamma(H_2)}{1-\gamma(H_1)\gamma(H_2)}, \quad
+	    \hat\beta_2 \leq \gamma(H_2) \beta(H_2) + \beta(H_1) \\
+	\end{gather*}
+\end{theorem}
+
+\begin{nb}\cref{thm:io-small-gain} is indifferent to the feedback sign\end{nb}
+
+\subsection{$\Lebesgue$-stability for passive systems}
+
+\begin{theorem}[$\Lebesgue_2$-stability for passive system]
+	If a system is strictly passive w.r.t. the output, then the causal operator $H : \Lebesgue_2 \to \Lebesgue_2$ associated to the system is weakly bounded and hence $\Lebesgue_2$-stable, with gain $\leq \frac{1}{\delta}$
+\end{theorem}
+
+\subsection{$\Lebesgue$-stability for autonomous Lur'e system}
+
+\begin{theorem}[Small gain theory $\Lebesgue_\infty$-stability of a Lur'e system]
+An autonomous Lur'e system is $\Lebesgue_\infty$-stable (for any sector nonlinearity $\varphi(\cdot) \in \Phi_{[-k, k]}$) if
+\[k \norm{g(\cdot)}_1 < 1\]
+\end{theorem}
+
+\begin{theorem}[Small gain theory $\Lebesgue_2$-stability of a Lur'e system]
+	An autonomous Lur'e system is $\Lebesgue_2$-stable (for any sector nonlinearity $\varphi(\cdot) \in \Phi_{[-k, k]}$) if
+	\[k \norm{G(s)}_\infty < 1\]
+\end{theorem}
+
+\begin{theorem}[Circle criterion for $\Lebesgue_2$-stability of a Lur'e system]
+	An autonomous Lur'e system is $\Lebesgue_2$-stable (for any sector nonlinearity $\varphi(\cdot) \in \Phi_{[k_1, k_2]}$ if the number of encirclements of $G(s)$ Nyquist plot around $O(k_1,k_2)$ is equal to the amount of poles of $G(s)$ with positive real part.
+\end{theorem}
