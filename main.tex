@@ -4,6 +4,7 @@
 \usepackage{amssymb}
 \usepackage{amsmath}
 \usepackage{amsthm}
+\usepackage{mathtools}
 \usepackage[makeroom]{cancel}
 \usepackage{svg}
 \usepackage{tabularx}
@@ -75,7 +76,9 @@ bottom=30mm
 \newcommand{\trans}{\mathsf{T}}
 \newcommand{\inv}{{-1}}
 \newcommand{\psinv}{\dag}
-\newcommand\norm[1]{\left\lVert#1\right\rVert}
+%\newcommand\norm[1]{\left\lVert#1\right\rVert}
+\DeclarePairedDelimiter{\norm}{\lVert}{\rVert}
+\DeclarePairedDelimiter{\abs}{\lvert}{\rvert}
 
 \newcommand{\Real}{\mathbb{R}}
 \newcommand{\Realp}{\Real^+}

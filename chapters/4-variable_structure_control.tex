@@ -1,4 +1,4 @@
-\chapter{Variable structure control}
+\usepackage{amsmath}\chapter{Variable structure control}
 
 \section{Definition}
 
@@ -250,9 +250,9 @@ The resulting control system is shown in \cref{fig:vsc-control}.
             \node [block, right=0.6cm of iy_d] (gamma) {$\gamma$};
             \node [sum, right=.6cm of gamma] (sum_e) {};
             \node [block, right=1cm of sum_e] (sgn) {$\sgn(\cdot)$};
-            \node [block, above=1cm of sgn] (g) {$g(\cdot)$};
+            \node [block, above=.5cm of sgn] (g) {$g(\cdot)$};
             \node [block, right=0.6cm of sgn] (q) {$q$};
-            \node [block, above=1cm of q] (r) {$r$};
+            \node [block, above=.5cm of q] (r) {$r$};
 
             \node [block, below=2cm of sgn] (beta) {$\vect \beta^\trans$};
 
@@ -280,7 +280,7 @@ The resulting control system is shown in \cref{fig:vsc-control}.
             \draw [->] (system)[yshift=-.3cm] -| node[pos=0.6] {$x$} (xalpha) |- (beta);
             \draw [->] (xalpha) -- (alpha);
 
-            \draw [->] (beta) -| node[pos=0.9] {$-$} (sum_e);
+            \draw [->] (beta) -| node[pos=0.95] {$-$} node[pos=0.7] {$\tilde y$} (sum_e);
 
             \draw [->] (system.east |- oy) -- node [pos=0.7] {$y$} (oy);
         \end{tikzpicture}
@@ -296,6 +296,120 @@ Good performance can be reached also with $r = 0$ because the transitory time is
 A valid choice of $g(s)$ can be $g(s) = s$ and $r=1$
 
 \section{Variations}
+
+\subsection{Robustness w.r.t. load disturbance}
+
+\begin{figure}[htb]
+    \centering
+    \resizebox{\textwidth}{!}{
+        \begin{tikzpicture}
+            \node [input] (iy_d) {};
+
+            \node [block, right=0.6cm of iy_d] (gamma) {$\gamma$};
+            \node [sum, right=.6cm of gamma] (sum_e) {};
+            \node [block, right=1cm of sum_e] (sgn) {$\sgn(\cdot)$};
+            \node [block, above=.5cm of sgn] (g) {$g(\cdot)$};
+            \node [block, right=0.6cm of sgn] (q) {$q$};
+            \node [block, above=.5cm of q] (r) {$r$};
+
+            \node [block, below=2cm of sgn] (beta) {$\vect \beta^\trans$};
+
+            \node [sum, right=0.6cm of q] (sum_v) {};
+            \node [sum, right=0.6cm of sum_v] (sum_u) {};
+            \node [block, right=1cm of sum_u] (system) {$G(s)$};
+            \node [block, below=.8cm of system] (alpha) {$\vect \beta^\trans A$};
+
+            \node [output, right=1cm of system, yshift=0.3cm] (oy) {};
+
+            \node [node, right=.5 of alpha] (xalpha) {};
+
+            \draw [->] (iy_d) -- node[pos=0.2] {$\bar y^0$} (gamma);
+
+            \draw [->] (gamma) -- (sum_e);
+            \draw [->] (sum_e) -- node[node, name=s2, pos=.5] {} node[swap]{$-s$} (sgn);
+            \draw [->] (s2) |- (g);
+            \draw [->] (sgn) -- (q);
+            \draw [->] (g) -- (r);
+            \draw [->] (q) -- (sum_v);
+            \draw [->] (r) -| (sum_v);
+            \draw [->] (sum_v) -- node {$v$} (sum_u);
+            \draw [->] (sum_u) -- node {$u$} (system);
+
+            \draw [->] (alpha) -| node[pos=0.9] {$-$} (sum_u);
+
+            \draw [->] (system)[yshift=-.3cm] -| node[pos=0.6] {$x$} (xalpha) |- (beta);
+            \draw [->] (xalpha) -- (alpha);
+
+            \draw [->] (beta) -| node[pos=0.95] {$-$} node[pos=0.7] {$\tilde y$} (sum_e);
+
+            \draw [->] (system.east |- oy) -- node [pos=0.7] {$y$} (oy);
+
+            \draw [->] (sum_u) ++ (0,1) -- node[pos=0.1] {$w$} (sum_u);
+        \end{tikzpicture}
+    }
+    \caption{VSC with disturbance on the control variable}
+    \label{fig:vsc-control-noise}
+\end{figure}
+
+Let us consider a VSC with noise on the control variable as in \cref{fig:vsc-control-noise}, the overall system can write as
+
+\[
+    \begin{cases}
+        \dx = A\x + B u \\
+        \tilde y = \vect\beta^\trans \x
+    \end{cases}
+\]
+
+where $u = - \vect\beta^\trans A \x + v + w$, so
+
+\[
+    \begin{cases}
+        \dx = (A - B\vect\beta^\trans A)\x + B (v + w) \\
+        \tilde y = \vect\beta^\trans \x
+    \end{cases}
+\]
+
+if we calculate the first derivation of $\tilde y$ we get
+
+\[
+    \dot{\tilde y} = \vect\beta^\trans \dx =  (\vect\beta^\trans A - \vect\beta^\trans B\vect\beta^\trans A)\x + \vect\beta^\trans B (v + w)
+\]
+
+and remembering that due to the shape $\vect\beta^\trans B = 1$ we get
+
+\[
+    \dot{\tilde y} = v + w = q \sgn(\gamma\bar y^0 - \tilde y) + r g(\gamma\bar y^0 - \tilde y) + w
+\]
+
+with $\abs{w(t)} = W < q$ the equilibrium still defined by $\tilde y=\gamma \bar y^0$ (because the sign of $\dot{\tilde y}$ is defined by the function $\sgn(\gamma \bar y^0 - \tilde y)$).
+
+Now let us check the transitory time, setting $V(s) = \frac{1}{2}s^2$ where $s = \tilde y - \gamma \bar y^0$
+
+\begin{multline*}
+    \dV = s\dot s = s \dot{\tilde y}
+    = - s q \sgn(s) - r g(s) + s w \\
+    = - s q \sgn(s) - r g(s) + \abs{s} \sgn(s) w \\
+    = - \abs{s} (q - w \sgn(s)) - r g(s)
+\end{multline*}
+
+due to $r g(s) > 0$ from definition we get a bound on $\dV$
+
+\[
+    \dV \leq -(q-W) \abs{s}
+\]
+
+Recalling the upper bound law $t_r \leq \frac{\abs{s(x(0))}}{\eta}$ valid if $\dV \leq - \eta \abs{s}$ we get
+
+\[
+    t_r \leq \frac{\abs{s(x(0))}}{q-W}
+\]
+
+\begin{theorem}
+    If a VCS is affected by a noise $w(t)$ on the control variable $u$ such that $\abs{w(t)} = W < q$, then its equilibrium is not influenced by the noise but the reaching time bound become
+    \[
+        t_r \leq \frac{\abs{s(x(0))}}{q-W}
+    \]
+\end{theorem}
 
 \subsection{Non-directly accessible state}
 
