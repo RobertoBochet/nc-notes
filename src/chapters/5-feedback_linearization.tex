@@ -50,16 +50,16 @@ Before to go on, let us introduce the concept of \textbf{relative degree} of a s
 Given a system with output $y=\vect c(\x)$ its relative degree is defined as the minimum amount time derivation of $y$ such that it is directly dependent by input $u$.
 
 \[
-    r = \min \left\{ \gamma : \pd{y^{(\gamma)}}{u} \neq 0 \right\}
+    r = \min \left\{ \gamma : \pdiff{y^{(\gamma)}}{u} \neq 0 \right\}
 \]
 
-The concept of relative degree can be formulated also exploiting the \textbf{Lie derivative}\footnote{Defined as $\Lie{f} h(\x) = \pd{h}{\x} f(\x) = \sum_{i=1}^{n} f_i(\x) \pd{h(\x)}{x_i}$}
+The concept of relative degree can be formulated also exploiting the \textbf{Lie derivative}\footnote{Defined as $\Lie{f} h(\x) = \pdiff{h}{\x} f(\x) = \sum_{i=1}^{n} f_i(\x) \pdiff{h(\x)}{x_i}$}
 
 \[
     \dot y =
     %\frac{d}{dt} \vect c(\x) =
-    \pd{\vect c}{\x} \dx =
-    \pd{\vect c}{\x} \left(\vect a(\x) + \vect b(\x) u\right) =
+    \pdiff{\vect c}{\x} \dx =
+    \pdiff{\vect c}{\x} \left(\vect a(\x) + \vect b(\x) u\right) =
     \Lie{\vect a} \vect c(\x) + u \Lie{\vect b} \vect c(\x)
 \]
 
@@ -71,8 +71,8 @@ Since $\Lie{\vect b} \vect c(\x) = 0$ then $\dot y = \Lie{\vect a} \vect c(\x)$ 
 \[
     \ddot y =
     %\frac{d}{dt} \left( \Lie{\vect a} \vect c(\x) \right) =
-    \pd{\left( \Lie{\vect a} \vect c(\x) \right)}{x} \dx =
-    \pd{\left( \Lie{\vect a} \vect c(\x) \right)}{x} \left(\vect a(\x) + \vect b(\x) u\right) =
+    \pdiff{\left( \Lie{\vect a} \vect c(\x) \right)}{x} \dx =
+    \pdiff{\left( \Lie{\vect a} \vect c(\x) \right)}{x} \left(\vect a(\x) + \vect b(\x) u\right) =
     \Lie{\vect a}^2 \vect c(\x) + u \Lie{\vect b} \Lie{\vect a} \vect c(\x)
 \]
 
@@ -150,8 +150,8 @@ so we can impose $\tilde x_k =\varphi_k(\x) = \Lie{a}^{k-1} c(\x)$, then
 
 \begin{multline*}
     \dot{\tilde x}_k =
-    \pd{\varphi_k}{\x} \dx =
-    \pd{\left( \Lie{a}^{k-1} c(\x) \right)}{\x} \left( a(\x) + b(\x) u \right) \\ =
+    \pdiff{\varphi_k}{\x} \dx =
+    \pdiff{\left( \Lie{a}^{k-1} c(\x) \right)}{\x} \left( a(\x) + b(\x) u \right) \\ =
     \Lie{a}^k c(\x) + \cancelto{0}{u \Lie{b}\Lie{a}^{k-1} c(\x)} =
     \Lie{a}^k c(\x) =
     \varphi_{k+1}(\x) =
@@ -235,7 +235,7 @@ In order to satisfy the \cref{thm:full-feedback-linearization} is useful to have
     A function $c(\cdot)$ that satisfies the \cref{thm:full-feedback-linearization} exists if and only if there exists an open set $D, \x^0 \in D$, such that the following conditions hold:
 
     \begin{itemize}
-        \item The vectors in the set $\{\vect b(\x), \ad{\vect a}^1 \vect b(\x), \dots, \ad{\vect a}^{n-1} \vect b(\x) \}$\footnote{this is another common way to indicate the \textbf{Lie bracket} such that $\ad{\vect a}^{1}\vect b(\x) = \Lieb{\vect a}{\vect b} = \Lie{\vect a}\vect b(\x) - \Lie{\vect b}\vect a(\x) = \pd{\vect b}{\x}\vect a(\x) - \pd{\vect a}{\x}\vect b(\x)$ and $\ad{\vect a}^{i}\vect b(\x) = \Lieb{\vect a}{\ad{\vect a}^{i-1}\vect b}$} are linearly independent for all $x \in D$
+        \item The vectors in the set $\{\vect b(\x), \ad{\vect a}^1 \vect b(\x), \dots, \ad{\vect a}^{n-1} \vect b(\x) \}$\footnote{this is another common way to indicate the \textbf{Lie bracket} such that $\ad{\vect a}^{1}\vect b(\x) = \Lieb{\vect a}{\vect b} = \Lie{\vect a}\vect b(\x) - \Lie{\vect b}\vect a(\x) = \pdiff{\vect b}{\x}\vect a(\x) - \pdiff{\vect a}{\x}\vect b(\x)$ and $\ad{\vect a}^{i}\vect b(\x) = \Lieb{\vect a}{\ad{\vect a}^{i-1}\vect b}$} are linearly independent for all $x \in D$
         \item The set of the vector fields $\{\vect b(\x), \ad{\vect a}^1 \vect b(\x), \dots, \ad{\vect a}^{n-2} \vect b(\x) \}$ is involutive in $D$
     \end{itemize}
 \end{theorem}

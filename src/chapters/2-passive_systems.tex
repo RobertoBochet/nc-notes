@@ -13,7 +13,7 @@
 A dynamical system is called \textbf{passive} if there exists a \textbf{Lyapunov function} $\V(\x)$ called \textbf{storage function}, such that
 
 \[
-    uy \geq \pd{V}{\x}(\x) f(\x,u) + \epsilon u^2 + \delta y^2 + \rho \psi(\x)
+    uy \geq \pdiff{V}{\x}(\x) f(\x,u) + \epsilon u^2 + \delta y^2 + \rho \psi(\x)
 \]
 
 with
@@ -25,7 +25,7 @@ with
 Notice that the Lyapunov function can be written as
 
 \[
-     \pd{\V}{\x} f(\x,0) = \dV(\x)
+     \pdiff{\V}{\x} f(\x,0) = \dV(\x)
 \]
 
 \subsection{Conservative system}
@@ -33,7 +33,7 @@ Notice that the Lyapunov function can be written as
 A passive system is called \textbf{conservative} if $\epsilon = \delta = \rho = 0$, such that
 
 \[
-    uy = \pd{V}{\x}(\x) f(\x,u)
+    uy = \pdiff{V}{\x}(\x) f(\x,u)
 \]
 
 \subsection{Strictly passive}

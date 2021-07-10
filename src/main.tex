@@ -1,5 +1,7 @@
 \documentclass[12pt]{notes}
 
+\include{math_macro}
+
 % defines the license
 \usepackage[
 	type={CC},
@@ -8,10 +10,10 @@
 ]{doclicense}
 
 % adds bibliography file
-%\addbibresource{references.bib}
+\addbibresource{references.bib}
 
 
-\title{Notes}
+\title{Nonlinear control\\Notes\footnote{the whole document is based on \cite{nc-slides}}}
 \author{Roberto Bochet}
 
 
@@ -21,7 +23,12 @@
 	\tableofcontents
 
 
-	%% content
+	\include{chapters/1-switched_systems}
+	\include{chapters/2-passive_systems}
+	\include{chapters/3-lure_systems}
+	\include{chapters/4-variable_structure_control}
+	\include{chapters/5-feedback_linearization}
+	\include{chapters/6-input_output}
 
 
 	\printindex

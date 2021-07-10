@@ -5,7 +5,7 @@
 \begin{definition}[weakly bounded operator]
 	A causal operator $H : \Lebesgueext \to \Lebesgueext$ is weakly bounded (or with finite gain) if
 	\[
-		\exists \hat\gamma, \hat\beta \in \Realp : \norm{H(u(\cdot))} \leq \hat\gamma \norm{u(\cdot)} + \hat\beta, \, \forall u(\cdot) \in \Lebesgue
+		\exists \hat\gamma, \hat\beta \in \RealP : \norm{H(u(\cdot))} \leq \hat\gamma \norm{u(\cdot)} + \hat\beta, \, \forall u(\cdot) \in \Lebesgue
 	\]
 \end{definition}
 
@@ -13,14 +13,14 @@
 	Let $H : \Lebesgueext \to \Lebesgueext$ be a causal weakly bounded operator.
 	The gain of $H$ is defined as
 	\[
-		\gamma(H) = \inf\{\hat\gamma \in \Realp : \norm{H(u(\cdot))} \leq \hat\gamma \norm{u(\cdot)} + \hat\beta, \, \forall u(\cdot) \in \Lebesgue, \exists \hat\beta \in \Realp\}
+		\gamma(H) = \inf\{\hat\gamma \in \RealP : \norm{H(u(\cdot))} \leq \hat\gamma \norm{u(\cdot)} + \hat\beta, \, \forall u(\cdot) \in \Lebesgue, \exists \hat\beta \in \RealP\}
 	\]
 \end{definition}
 
 \begin{nb}a less important value that could appear is $\beta(H)$.
 This is intended as
 \[
-	\beta(H) = inf\{\hat\beta \in \Realp : \norm{H(u(\cdot))} \leq \gamma(H) \norm{u(\cdot)} + \hat\beta, \, \forall u(\cdot) \in \Lebesgue\}
+	\beta(H) = inf\{\hat\beta \in \RealP : \norm{H(u(\cdot))} \leq \gamma(H) \norm{u(\cdot)} + \hat\beta, \, \forall u(\cdot) \in \Lebesgue\}
 \]
 \end{nb}
 
