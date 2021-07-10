@@ -24,6 +24,7 @@ jobs:
         uses: xu-cheng/latex-action@v2
         with:
           root_file: main.tex
+          working_directory: ./src
  
       - name: Delete old release
         uses: dev-drprasad/delete-tag-and-release@v0.1.2
