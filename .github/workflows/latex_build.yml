@@ -24,6 +24,21 @@ jobs:
         uses: xu-cheng/latex-action@v2
         with:
           root_file: main.tex
+          working_directory: ./src
+
+      - uses: actions/upload-artifact@v2
+        with:
+          name: document
+          path: ./src/main.pdf
+
+  publish:
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/download-artifact@v2
+        with:
+          name: document
+          path: ./
 
       - name: Delete old release
         uses: dev-drprasad/delete-tag-and-release@v0.1.2
