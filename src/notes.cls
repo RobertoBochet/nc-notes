@@ -97,6 +97,7 @@
 \tikzstyle{node} = [draw, circle, fill, minimum size=2pt, inner sep=0pt, outer sep=0pt, anchor=center]
 
 %% other packages
+\RequirePackage[pdfusetitle]{hyperref}
 \RequirePackage[capitalize,nameinlink,noabbrev]{cleveref}
 \RequirePackage{svg}
 \RequirePackage{caption}
@@ -104,7 +105,7 @@
 \RequirePackage{tabularx}
 \RequirePackage{soul} % to highlight text
 \RequirePackage{enumitem} % to create lists
-\RequirePackage[pdfusetitle]{hyperref}
+\RequirePackage{csquotes}
 
 %% layout
 \RequirePackage[stable]{footmisc}
@@ -116,6 +117,7 @@
 \newcommand{\IfPackageLoaded}[2]{\ltx@ifpackageloaded{#1}{#2}{}}
 
 \renewcommand\maketitle{
+	\pagenumbering{Alph}
 	\begin{titlepage}
 		\centering
 		\vspace*{\stretch{2}}
@@ -138,6 +140,8 @@
 			\vspace*{\stretch{0.3}}
 		}
 	\end{titlepage}
+	\thispagestyle{empty}
+	\pagenumbering{arabic}
 }
 
 \AtBeginDocument{
