@@ -140,7 +140,7 @@
 	\end{titlepage}
 }
 
-\AtDocumentBegin{
+\AtBeginDocument{
 	\makeindex[intoc]
 }
 
