@@ -116,6 +116,8 @@
 \RequirePackage{ltxcmds}
 \newcommand{\IfPackageLoaded}[2]{\ltx@ifpackageloaded{#1}{#2}{}}
 
+\def\sourcecode#1{\gdef\@sourcecode{#1}}
+
 \renewcommand\maketitle{
 	\pagenumbering{Alph}
 	\begin{titlepage}
@@ -133,12 +135,24 @@
 		\large \@date
 
 		\vspace*{\stretch{5.0}}
-		\IfPackageLoaded{doclicense}{
-			\doclicenseImage[imagewidth=3cm]
 
-			\doclicenseLongText
-			\vspace*{\stretch{0.3}}
-		}
+		\begin{center}
+			\begin{minipage}{\linewidth-7em-\doclicense@imagedistance}
+				\@nameuse{\doclicense@hyphenation}
+				\small{
+					\doclicenseLongText
+					\ifdefined\@sourcecode
+					\\ This work is realized in \LaTeX, you can find the source code on \href{\@sourcecode}{\@sourcecode}
+					\fi
+				}
+			\end{minipage}
+			\hfill
+			\begin{minipage}{7em}
+				\doclicenseImage[imagewidth=7em]
+			\end{minipage}
+		\end{center}
+
+		\vspace*{0.5em}
 	\end{titlepage}
 	\thispagestyle{empty}
 	\pagenumbering{arabic}
