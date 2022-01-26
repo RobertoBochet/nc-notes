@@ -9,6 +9,11 @@
 % codec
 \RequirePackage[utf8]{inputenc}
 
+% basic packages
+\RequirePackage[pdfusetitle]{hyperref}
+\RequirePackage{amsmath}
+\RequirePackage[capitalize,nameinlink,noabbrev]{cleveref}
+
 % geometry
 \RequirePackage{geometry}
 \geometry{
@@ -28,7 +33,6 @@
 
 %% math
 \RequirePackage{amssymb}
-\RequirePackage{amsmath}
 \RequirePackage{amsthm}
 \RequirePackage{mathtools}
 \RequirePackage[makeroom]{cancel} % to put a obliquos line on a math symbol to delete it
@@ -77,6 +81,8 @@
 \newtheorem{example}{Example}[chapter]
 \newtheorem{definition}{Definition}[chapter]
 
+\Crefname{conjecture}{Conjecture}{Conjectures}
+
 %% block diagram
 \usepackage{tikz}
 \usetikzlibrary{circuits}
@@ -97,8 +103,6 @@
 \tikzstyle{node} = [draw, circle, fill, minimum size=2pt, inner sep=0pt, outer sep=0pt, anchor=center]
 
 %% other packages
-\RequirePackage[pdfusetitle]{hyperref}
-\RequirePackage[capitalize,nameinlink,noabbrev]{cleveref}
 \RequirePackage{svg}
 \RequirePackage{caption}
 \RequirePackage{subcaption}
