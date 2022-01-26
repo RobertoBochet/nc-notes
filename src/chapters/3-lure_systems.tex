@@ -125,17 +125,17 @@ From the definition of constant inputs we get $\Delta y^0 = \Delta u^0 = \Delta 
 \end{definition}
 
 \begin{theorem}[Nyquist criterion]\label{thm:nyquist}
-A degenerated \textbf{autonomous Lur'e system} with $\varphi(\cdot) = k$ (linearly in the error) is asymptotically stable if and only if the Nyquist plot of the linear part encircles (anti-clockwise) the point of the complex plane $-\frac{1}{k}$ as many times as the amount the unstable poles of it
+A degenerated \textbf{autonomous Lur'e system} with $\varphi(e) = k e$ (linear in the error) is asymptotically stable if and only if the Nyquist plot of the linear part encircles (anti-clockwise) the point of the complex plane $-\frac{1}{k}$ as many times as the amount the unstable poles of it
 \end{theorem}
 
-\begin{theorem}\label{thm:lure-nyquist}
+\begin{theorem}[Necessary condiction]\label{thm:lure-nyquist}
     \[
         I(k_1,k_2) = \{\alpha \in \Real : \alpha = -\frac{1}{k}, k \in [k_1,k_2]\}
     \]
     If \textbf{autonomous Lur'e system} is absolutely stable in the sector $[k_1,k_2]$, then the \textbf{Nyquist plot} of the linear part encircles (anti-clockwise) $I(k_1,k_2)$ as many times as the amount the unstable poles of it
 \end{theorem}
 
-\begin{nb}\cref{thm:lure-nyquist} defined a necessary condition for stability but not sufficient\end{nb}
+\begin{nb}\cref{thm:lure-nyquist} defined a necessary condition for stability of a \textbf{autonomous Lur'e system} but not sufficient\end{nb}
 
 \begin{conjecture}[Aizerman conjecture, 1949]\label{cjt:aizerman}
     The \cref{thm:lure-nyquist} is also sufficient for the stability of the \textbf{autonomous Lur'e system}
@@ -148,17 +148,16 @@ A degenerated \textbf{autonomous Lur'e system} with $\varphi(\cdot) = k$ (linear
 \subsection{Popov criterion}
 
 \begin{theorem}[Popov criterion, 1962]\label{thm:popov-criterion}
-    An \textbf{autonomous Lur'e system} is absolutely stable in sector $[0,k]$ if the linear part is asymptotically stable and exists a real number $q$ such that
+    An \textbf{autonomous Lur'e system} is absolutely stable in sector $[0,k]$ if the linear part is \textbf{asymptotically stable} and exists a real number $q$ such that
     \[
         \Re [(1+\j \omega q) G(\j \omega)] > - \frac{1}{k}, \forall \omega \geq 0
     \]
-    is satisfied
 \end{theorem}
 
-\begin{nb}\cref{thm:popov-criterion} defined a sufficient condition for stability\end{nb}
+\begin{nb}\cref{thm:popov-criterion} defined a sufficient but not necessary condition for the stability of the \textbf{autonomous Lur'e system}\end{nb}
 
 \begin{theorem}[Popov criterion (alternative), 1962]
-    An \textbf{autonomous Lur'e system} is absolutely stable in sector $[0,k]$ if the linear part is asymptotically stable with transfer function $G(s)$ and exists a positive real number $q$ such that $-\frac{1}{q}$ is not an eigenvalue of the matrix A of the linear part and defined
+    An \textbf{autonomous Lur'e system} is absolutely stable in sector $[0,k]$ if the linear part is \textbf{asymptotically stable} with transfer function $G(s)$ and exists a positive real number $q$ such that $-\frac{1}{q}$ is not an eigenvalue of the matrix A of the linear part and defined
     \[
         H(s) = 1+k(1+qs)G(s)
     \]
