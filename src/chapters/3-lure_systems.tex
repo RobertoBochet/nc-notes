@@ -414,5 +414,10 @@ Based on \cref{thm:switching-stability-linear-common} we can state that
 \end{theorem}
 
 \begin{corollary}
-    Time-varying autonomous Lur'e system linear in the error (\cref{fig:lure-system-time-varying-linear}) with $k(t) \in [k_1,k_2], \forall t$ is \textbf{GAUS} stability is \textbf{exponential}
+    Time-varying autonomous Lur'e system linear in the error (\cref{fig:lure-system-time-varying-linear})
+    with $k(t) \in [k_1,k_2], \forall t$ is \textbf{GAUS} stability is \textbf{exponential} such that
+    \[
+        \norm{\x(t)} \leq \sqrt{\frac{\lambda_{max}(P)}{\lambda_{min}(P)}} e^{-\frac{\gamma}{2 \lambda_{max}(P)} t} \norm{\x(0)}
+        \qquad \text{for} \quad \dV(\x) \leq -\gamma\norm{\x}^2
+    \]
 \end{corollary}
