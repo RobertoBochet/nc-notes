@@ -28,8 +28,8 @@
 
 \[
     \begin{cases}
-        \dx = A x + B \varphi(-Cx) \\
-        y = C x
+        \dx = A \x + B \varphi(-C\x) \\
+        y = C \x
     \end{cases}
 \]
 
@@ -311,3 +311,108 @@ Merging the two conditions we can formulate the \textbf{Circle criterion}
 \end{corollary}
 
 \begin{nb}The \cref{crl:cicle-criterion} is easily verified computing $O(k_1,k_2)$ for $k_1 < 0 < k_2$\end{nb}
+
+\subsection{Time-varying system}
+
+\begin{figure}[htb]
+    \centering
+    \resizebox{0.7\textwidth}{!}{
+        \begin{tikzpicture}
+            \node [sum] (sum_e) {};
+
+            \node [block, right=1cm of sum_e] (controller) {$\varphi(\cdot,t)$};
+            \node [block, right=1cm of controller] (system) {$G(s)$};
+
+            \node [output, right=1cm of system] (oy) {};
+
+            \draw [->] (sum_e) -- node {$e$} (controller);
+            \draw [->] (controller) -- node {$u$} (system);
+            \draw [->] (system) -- node [pos=0.8] {$y$} node [node, name=y, pos=0.5] {} (oy);
+
+            \draw [->] (y) -- ++(0,-1.5) -| node [pos=0.95] {$-$} (sum_e);
+        \end{tikzpicture}
+    }
+    \caption{Time-varying autonomous Lur'e system}
+    \label{fig:lure-system-time-varying}
+\end{figure}
+
+Some conclusion on the stability of a \textbf{time-varying system} can be derived exploiting the autonomous Lur'e system theory.
+
+Let us take into account a \textbf{Time-varying autonomous Lur'e system} (\cref{fig:lure-system-time-varying}) with
+
+\[
+    \varphi(\cdot,t) \in \Phi_{[k_1,k_2]} = \{\phi(\cdot) : k_1 e^2 \geq \phi(e)e \geq k_2 e^2, \forall e \in \Real \}, \quad \forall t \in \Real
+\]
+
+The system can be written as
+
+\[
+    \begin{cases}
+        \dx = A \x + B \varphi(-C\x, t) \\
+        y = C \x
+    \end{cases}
+\]
+
+Let us consider the \textbf{Time-varying autonomous Lur'e system} with $\varphi$ linear in the error(\cref{fig:lure-system-time-varying-linear}), such that
+
+\[
+    \varphi(e,t) = k(t)e \in \Phi_{[k_1,k_2]}, \forall t
+\]
+
+thus $k_1 \leq k(t) \leq k_2$
+
+\begin{figure}[htb]
+    \centering
+    \resizebox{0.7\textwidth}{!}{
+        \begin{tikzpicture}
+            \node [sum] (sum_e) {};
+
+            \node [block, right=1cm of sum_e] (controller) {$k(t)$};
+            \node [block, right=1cm of controller] (system) {$G(s)$};
+
+            \node [output, right=1cm of system] (oy) {};
+
+            \draw [->] (sum_e) -- node {$e$} (controller);
+            \draw [->] (controller) -- node {$u$} (system);
+            \draw [->] (system) -- node [pos=0.8] {$y$} node [node, name=y, pos=0.5] {} (oy);
+
+            \draw [->] (y) -- ++(0,-1.5) -| node [pos=0.95] {$-$} (sum_e);
+        \end{tikzpicture}
+    }
+    \caption{Time-varying autonomous Lur'e system linear in error}
+    \label{fig:lure-system-time-varying-linear}
+\end{figure}
+
+\begin{theorem}
+    Time-varying autonomous Lur'e system(\cref{fig:lure-system-time-varying}) is \textbf{absolutely stable in $[k_1,k_2]$ sector}
+    if and only if the equivalent Time-varying autonomous Lur'e system linear in the error(\cref{fig:lure-system-time-varying-linear})
+    is \textbf{GUAS} $\forall k(\cdot) : k(t) \in [k_1,k_2], \forall t$
+\end{theorem}
+
+\subsubsection{Stability of time-varying system linear in error}
+
+The system in \cref{fig:lure-system-time-varying-linear} can be write as
+
+\[
+    \begin{cases}
+        \dx = A \x - B k(t) C\x = (A - k(t) B C) \x = A_{k(t)} \x \\
+        y = C \x
+    \end{cases}
+\]
+
+with this formulation theory on switching system(\cref{subsec:switching-stability-arbitrary}) can be used to prove the stability.
+
+Based on \cref{thm:switching-stability-linear-common} we can state that
+
+\begin{theorem}
+    Time-varying autonomous Lur'e system linear in the error (\cref{fig:lure-system-time-varying-linear}) with $k(t) \in [k_1,k_2], \forall t$
+    is \textbf{GAUS} if there exists  $P=P^\trans \succ 0$ such that
+    \[
+        A_{k_2}^\trans P + P A_{k_2} \prec 0 \text{\quad and \quad}
+        A_{k_1}^\trans P + P A_{k_1} \prec 0
+    \]
+\end{theorem}
+
+\begin{corollary}
+    Time-varying autonomous Lur'e system linear in the error (\cref{fig:lure-system-time-varying-linear}) with $k(t) \in [k_1,k_2], \forall t$ is \textbf{GAUS} stability is \textbf{exponential}
+\end{corollary}

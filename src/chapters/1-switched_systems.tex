@@ -55,7 +55,7 @@ a family of $m$ systems characterized by their vector fields $\vect f_q(\x)$ and
 
 \section{Equilibrium}
 
-\begin{theorem}
+\begin{theorem}\label{thm:switching-}
 	If a switched system defined by
 	\[
 		\dx = \vect f_q(\x), \qquad q \in Q = \{1,2,\dots,m\}
@@ -67,7 +67,7 @@ a family of $m$ systems characterized by their vector fields $\vect f_q(\x)$ and
 
 \section{Stability}
 
-\subsection{Stability for arbitrary switching}
+\subsection{Stability for arbitrary switching}\label{subsec:switching-stability-arbitrary}
 
 \begin{definition}[globally uniformly asymptotically stable equilibrium]
 	The equilibrium $\x=\vect 0$ is \textbf{GUAS} if it is \textbf{GAS}, uniformly w.r.t. the switching signals $\sigma$
@@ -85,10 +85,10 @@ A switched system can have a family systems of linear ones such that
 	\dx = A_q \x, \qquad q \in Q = \{1,2,\dots,m\}
 \]
 
-\begin{theorem}
-	If for a switched system with a family systems of linear ones exists a matrix $P = P^\trans > 0$ such that
+\begin{theorem}\label{thm:switching-stability-linear-common}
+	If for a switched system with a family systems of linear ones exists a matrix $P = P^\trans \succ 0$ such that
 	\[
-		PA_q + A_q^\trans P < 0, \qquad \forall q \in Q = \{1,2,\dots,m\}
+		PA_q + A_q^\trans P \prec 0, \qquad \forall q \in Q = \{1,2,\dots,m\}
 	\]
 	then, the equilibrium $\x=\vect 0$ of the switched system is \textbf{GUAS}.
 \end{theorem}
