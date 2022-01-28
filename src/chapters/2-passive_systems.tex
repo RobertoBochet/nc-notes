@@ -28,6 +28,26 @@ Notice that the Lyapunov function can be written as
      \pdiff{\V}{\x} f(\x,0) = \dV(\x)
 \]
 
+\subsection{Interpretation}
+
+Let us consider
+
+\[
+    uy \geq \pdiff{\V}{\x} f(\x,u)
+\]
+
+integrating it we get
+
+\[
+    \V(\x(t)) \leq \V(\x(0)) + \int_0^t u(\tau)y(\tau) d\tau
+\]
+
+which can be interpreted as the \textbf{current internal energy} is at most equal to the \textbf{initial energy} plus
+\textbf{energy supplied from outside}, that is equivalent to state that \textbf{there is no internal energy generation}
+
+
+
+
 \subsection{Conservative system}
 
 A passive system is called \textbf{conservative} if $\epsilon = \delta = \rho = 0$, such that
